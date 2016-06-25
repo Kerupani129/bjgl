@@ -1,7 +1,8 @@
 package net.kerupani129.sjgltest;
 
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
+
+import net.kerupani129.sjgl.SContainer;
 
 public class Main {
 
@@ -20,7 +21,7 @@ public class Main {
      */
 	public static void main(String[] args) throws SlickException {
 
-        AppGameContainer app = new AppGameContainer(new TestGame());
+        SContainer app = new SContainer(new TestGame());
         app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
         app.setTargetFrameRate(60);
         app.setVSync(true);

@@ -1,4 +1,4 @@
-package net.kerupani129.sjgl;
+package net.kerupani129.sjgl.gl;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;

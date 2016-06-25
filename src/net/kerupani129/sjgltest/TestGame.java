@@ -14,11 +14,17 @@ public class TestGame extends SGame {
      * ゲームの初期化
      */
 	public TestGame() {
+
+		// タイトル設定
 		super("SJGL Test");
-        addState(StartMenuState.class);
-        addState(GameStageState.class);
-        addState(GameMenuState.class);
-        this.enterState(StartMenuState.class);
+
+		// State 設定
+        addState(new StartMenuState());
+        addState(new GameStageState());
+        addState(new GameMenuState());
+
+        enterState(StartMenuState.class);
+
 	}
 
 }
