@@ -9,6 +9,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
 
+/*
+ * TODO: SContainer 以外や SGame 以外から呼ばれたときに対応する
+ */
 public abstract class SState extends BasicGameState {
 
 	//
@@ -18,17 +21,33 @@ public abstract class SState extends BasicGameState {
 	private boolean idIsInited;
 
 	//
+	// コンストラクタ
+	//
+	/**
+	 * 初期化
+	 */
+	public SState() {
+	}
+
+	/**
+	 * ID を指定して初期化
+	 */
+	public SState(int id) {
+		initID(id);
+	}
+
+	//
 	// メソッド
 	//
 	/**
 	 * ID 初期化
 	 */
-	public void initID(int id) {
+	public final void initID(int id) {
 		if ( !this.idIsInited ) {
 			this.id = id;
 			this.idIsInited = true;
 		} else {
-			throw new IllegalStateException("SState の ID は初期化済み");
+			throw new IllegalStateException("初期化済みの SState の ID を初期化しようとしました");
 		}
 	}
 
@@ -36,9 +55,9 @@ public abstract class SState extends BasicGameState {
 	 * ID 取得
 	 */
 	@Override
-	public int getID() {
+	public final int getID() {
 		if ( !idIsInited ) {
-			throw new IllegalStateException("SState の ID が未初期化");
+			throw new IllegalStateException("SState の ID が未初期化です");
 		}
 		return id;
 	}
@@ -47,27 +66,27 @@ public abstract class SState extends BasicGameState {
      * 初期化
      */
 	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+	public final void init(GameContainer container, StateBasedGame game) throws SlickException {
 		if ( container instanceof SContainer && game instanceof SGame ) init((SContainer)container, (SGame)game);
-		// throw new IllegalStateException("SState が SContainer 以外から呼ばれた");
+		// TODO: ユーザーが拡張できるようにする
 	}
 
 	/**
 	 * 描画
 	 */
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public final void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		if ( container instanceof SContainer && game instanceof SGame ) render((SContainer)container, (SGame)game, g);
-		// throw new IllegalStateException("SState が SContainer 以外から呼ばれた");
+		// TODO: ユーザーが拡張できるようにする
 	}
 
 	/**
 	 * 移動
 	 */
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public final void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if ( container instanceof SContainer && game instanceof SGame ) update((SContainer)container, (SGame)game, delta);
-		// throw new IllegalStateException("SState が SContainer 以外から呼ばれた");
+		// TODO: ユーザーが拡張できるようにする
 	}
 
     /**

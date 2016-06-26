@@ -8,11 +8,6 @@ import net.kerupani129.sjgl.input.SInput;
 public class SContainer extends AppGameContainer {
 
 	//
-	// フィールド
-	//
-	protected SInput sInput;
-
-	//
 	// コンストラクタ
 	//
 	/**
@@ -30,14 +25,8 @@ public class SContainer extends AppGameContainer {
 	 */
 	@Override
 	protected void initGL() {
-
-		sInput = new SInput(this.height);
-		input = sInput;
-
-		if ( game instanceof SGame ) ((SGame)game).initInput(sInput);
-
+		input = new SInput(this.height);
 		super.initGL();
-
 	}
 
 	/**
@@ -45,7 +34,7 @@ public class SContainer extends AppGameContainer {
 	 */
 	@Override
 	public SInput getInput() {
-		return this.sInput;
+		return (SInput) super.getInput();
 	}
 
 }

@@ -39,7 +39,7 @@ public class SInput extends Input {
 	public SKey getKey(SKeyTypeI type) {
 		SKey key = map.get(type);
 		if ( key == null ) {
-			throw new IllegalStateException("SKey の取得に失敗");
+			throw new IllegalStateException("SKey の取得に失敗しました");
 		}
 		return key;
 	}

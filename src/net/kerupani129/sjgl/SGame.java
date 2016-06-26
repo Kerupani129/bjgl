@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.Transition;
 
 import net.kerupani129.sjgl.input.SInput;
 import net.kerupani129.sjgl.input.SKeyType;
@@ -20,6 +22,9 @@ public class SGame extends StateBasedGame {
     private int maxId = 0;
     private Map<Class<? extends SState>, Integer> map = new HashMap<Class<? extends SState>, Integer>();
 
+	private Transition enterTransition;
+	private Transition leaveTransition;
+
     //
     // コンストラクタ
     //
@@ -28,13 +33,32 @@ public class SGame extends StateBasedGame {
      */
 	public SGame(String name) {
 		super(name);
+
+		// 初期状態の State が BasicGameState で初期化されているので、SState に置き換え
+		super.addState(new FirstState());
+
 	}
 
 	//
 	// メソッド
 	//
 	/**
-	 * State の追加
+	 * カレント SState のタイプ取得
+	 */
+	public Class<? extends SState> getCurrentStateType() {
+		return this.getCurrentState().getClass();
+	}
+
+	/**
+	 * カレント SState の取得
+	 */
+	@Override
+	public SState getCurrentState() {
+		return (SState)super.getCurrentState();
+	}
+
+	/**
+	 * SState の追加
 	 */
 	public void addState(SState state) {
 		state.initID(maxId);
@@ -44,34 +68,58 @@ public class SGame extends StateBasedGame {
 	}
 
 	/**
+	 * SState の ID 取得
+	 */
+	public int getStateID(Class<? extends SState> oclass) {
+		Integer id = map.get(oclass);
+		if ( id == null ) {
+			throw new IllegalStateException("SState の ID 取得に失敗しました");
+		}
+		return id;
+	}
+
+	/**
+	 * SState を取得
+	 */
+	public SState getState(Class<? extends SState> oclass) {
+		return (SState) super.getState(map.get(oclass));
+	}
+
+	/**
 	 * State に入る
 	 */
 	public void enterState(Class<? extends SState> oclass) {
-		Integer id = map.get(oclass);
-		if ( id == null ) {
-			throw new IllegalStateException("SState の enter に失敗");
-		}
-		super.enterState(id);
+		super.enterState(getStateID(oclass));
 	}
 
 	/**
-	 * State の初期化
+	 * State に入る
+	 */
+	public void enterState(Class<? extends SState> oclass, Transition leave, Transition enter) {
+		super.enterState(getStateID(oclass), leave, enter);
+		leaveTransition = leave;
+		enterTransition = enter;
+	}
+
+	/**
+	 * SGame の初期化
 	 */
 	@Override
-	public void initStatesList(GameContainer container) throws SlickException {
+	public final void initStatesList(GameContainer container) throws SlickException {
+		container.getInput().pause();
+		if (container instanceof SContainer) {
+			initInput(((SContainer) container).getInput());
+		}
 		for (int id : map.values()) {
 	        getState(id).init(container, this);
 		}
+		this.initGame(container);
 	}
 
 	/**
-	 * 親の SContainer 取得
+	 * SGame の初期化
 	 */
-	@Override
-	public SContainer getContainer() {
-		GameContainer container = super.getContainer();
-		if ( container instanceof SContainer ) return (SContainer)container;
-		throw new IllegalStateException("SGame が SContainer 以外に持たれている");
+	public void initGame(GameContainer container) throws SlickException {
 	}
 
 	/**
@@ -107,6 +155,58 @@ public class SGame extends StateBasedGame {
 			key.add(Input.KEY_RIGHT);
 		});
 
+	}
+
+	/**
+	 * update 後の処理
+	 */
+	@Override
+	protected final void postUpdateState(GameContainer container, int delta) throws SlickException {
+		Input input = container.getInput();
+		if ( !leaveTransition.isComplete() ) {
+			input.pause();
+		}
+		if ( enterTransition.isComplete() ) {
+			input.resume();
+		}
+		// TODO: ユーザーが拡張できるようにする
+	}
+
+	/**
+	 * 親の SContainer 取得
+	 */
+	@Override
+	public SContainer getContainer() {
+		return (SContainer)super.getContainer();
+	}
+
+}
+
+/**
+ * 最初の SState
+ */
+class FirstState extends SState {
+
+	//
+	// コンストラクタ
+	//
+	public FirstState() {
+		super(-1);
+	}
+
+	//
+	// メソッド
+	//
+	@Override
+	public void init(SContainer container, SGame game) throws SlickException {
+	}
+
+	@Override
+	public void render(SContainer container, SGame game, Graphics g) throws SlickException {
+	}
+
+	@Override
+	public void update(SContainer container, SGame game, int delta) throws SlickException {
 	}
 
 }

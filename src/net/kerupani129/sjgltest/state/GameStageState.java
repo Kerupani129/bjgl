@@ -2,6 +2,8 @@ package net.kerupani129.sjgltest.state;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
@@ -47,9 +49,9 @@ public class GameStageState extends SState {
 		SInput input = container.getInput();
 
 		if ( input.isKeyPressed(SKeyType.CANCEL) ) {
-			game.enterState(GameMenuState.class);
+			game.enterState(GameMenuState.class, new FadeOutTransition(), new FadeInTransition());
 		} else if ( input.isKeyPressed(SKeyType.OK) ) {
-			game.enterState(StartMenuState.class);
+			game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 		}
 
 	}
