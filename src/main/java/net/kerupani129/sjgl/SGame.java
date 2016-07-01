@@ -117,16 +117,13 @@ public class SGame extends StateBasedGame {
 		if (container instanceof SContainer) {
 			initInput(((SContainer) container).getInput());
 		}
-		for (int id : map.values()) {
-	        getState(id).init(container, this);
-		}
 		this.initGame(container);
 	}
 
 	/**
 	 * SGame の初期化
 	 */
-	public void initGame(GameContainer container) throws SlickException {
+	protected void initGame(GameContainer container) throws SlickException {
 	}
 
 	/**

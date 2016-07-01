@@ -4,21 +4,23 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.input.SInput;
 import net.kerupani129.sjgl.input.SKeyType;
-import net.kerupani129.sjgl.maps.tiled.STiledMap;
+import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.state.SState;
+import net.kerupani129.sjgltest.map.TObjectPlayer;
 
 public class GameStageState extends SState {
 
 	//
 	// フィールド
 	//
-    // TiledMap map;
-    STiledMap map;
+    private TMap map;
+    private TObjectPlayer player;
 
 	//
 	// メソッド
@@ -30,11 +32,11 @@ public class GameStageState extends SState {
     public void init(SContainer container, SGame game) throws SlickException {
 
     	// マップ読み込み
-    	// map = new TiledMap("map/test2.tmx");
-    	map = new STiledMap("map/test2.tmx");
-    	map.setToOrtho(container.getWidth(), container.getHeight());
+    	map = new TMap("map/test2.tmx");
+    	map.setViewportSize(container.getWidth(), container.getHeight());
 
-    	System.out.println("GameStageState.init()");
+    	// TODO: マップに含める
+    	player = new TObjectPlayer(map);
 
     }
 
@@ -52,8 +54,9 @@ public class GameStageState extends SState {
 		}
 
 		// マップ描画
-		// map.render(0, 0);
 		map.render(container, game, g);
+
+		player.render(container, game, g);
 
 	}
 
@@ -68,24 +71,30 @@ public class GameStageState extends SState {
 
 		if ( input.isKeyPressed(SKeyType.CANCEL) ) {
 			game.enterState(GameMenuState.class, new FadeOutTransition(), new FadeInTransition());
-		} else if ( input.isKeyPressed(SKeyType.OK) ) {
+		}
+		/* else if ( input.isKeyPressed(SKeyType.OK) ) {
 			game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 		}
 		if ( input.isKeyDown(SKeyType.RIGHT) ) {
-			map.translate(4, 0);
+			map.translateViewport(4, 0);
 		}
 		if ( input.isKeyDown(SKeyType.DOWN) ) {
-			map.translate(0, 4);
+			map.translateViewport(0, 4);
 		}
 		if ( input.isKeyDown(SKeyType.LEFT) ) {
-			map.translate(-4, 0);
+			map.translateViewport(-4, 0);
 		}
 		if ( input.isKeyDown(SKeyType.UP) ) {
-			map.translate(0, -4);
+			map.translateViewport(0, -4);
 		}
+		*/
 
-		// マップ移動
+		// マップ
 		map.update(container, game, delta);
+
+		Log.debug(" ■AI 開始");
+		player.update(container, game, delta);
+		Log.debug(" ■AI 終了");
 
 	}
 

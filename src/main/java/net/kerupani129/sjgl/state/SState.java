@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
@@ -67,7 +68,7 @@ public abstract class SState extends BasicGameState {
      */
 	@Override
 	public final void init(GameContainer container, StateBasedGame game) throws SlickException {
-		System.out.println("SState.init()");
+		Log.debug(" Class " + this.getClass().getSimpleName() + " has been initialized");
 		if ( container instanceof SContainer && game instanceof SGame ) init((SContainer)container, (SGame)game);
 		// TODO: ユーザーが拡張できるようにする
 	}
