@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.Transition;
 
 import net.kerupani129.sjgl.input.SInput;
@@ -96,6 +97,12 @@ public class SGame extends StateBasedGame {
 	 * State に入る
 	 */
 	public void enterState(Class<? extends SState> oclass, Transition leave, Transition enter) {
+		if (leave == null) {
+			leave = new EmptyTransition();
+		}
+		if (enter == null) {
+			enter = new EmptyTransition();
+		}
 		super.enterState(getStateID(oclass), leave, enter);
 		leaveTransition = leave;
 		enterTransition = enter;

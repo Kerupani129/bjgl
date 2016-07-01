@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="47">
+ <tileset firstgid="1" name="test" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+  <image source="test.png" width="512" height="512"/>
+  <terraintypes>
+   <terrain name="light_blue" tile="-1"/>
+   <terrain name="green" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain=",,,0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1" terrain=",,0,0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2" terrain=",,0,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3" terrain="0,0,0,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4" terrain="0,0,,0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16" terrain=",0,,0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17" terrain="0,0,0,0"/>
+  <tile id="18" terrain="0,,0,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="19" terrain="0,,0,0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20" terrain=",0,0,0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32" terrain=",0,,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33" terrain="0,0,,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34" terrain="0,,,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <animation>
+    <frame tileid="65" duration="500"/>
+    <frame tileid="17" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="48" terrain=",,,1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="49" terrain=",,1,1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="50" terrain=",,1,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="51" terrain="1,1,1,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="52" terrain="1,1,,1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="64" terrain=",1,,1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="65" terrain="1,1,1,1">
+   <objectgroup draworder="index">
+    <object id="0" x="0" y="0" width="32" height="32"/>
+    <object id="0" x="130" y="-4" height="2"/>
+   </objectgroup>
+  </tile>
+  <tile id="66" terrain="1,,1,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="67" terrain="1,,1,1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="68" terrain=",1,1,1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="80" terrain=",1,,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="81" terrain="1,1,,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="82" terrain="1,,,">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="tile" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3USwqAMAxF0Vc/C/C3AHXg/ndopQgiRcnIRu6BN+okaUiCpMqYWuXpYnpjhk8qfTbHLLe0SvU2mbcj6yeV2p0zKvHfLbz3EZT2eFLqY1SZO/0mt/MeZ3LtY9M/+vA8j9wN9nJjAQAAAAAAAAAAAACAtAOA2/GjECcAAA==
+  </data>
+ </layer>
+ <objectgroup name="object">
+  <object id="44" name="enemy" gid="66" x="352" y="192" width="32" height="32"/>
+ </objectgroup>
+</map>
