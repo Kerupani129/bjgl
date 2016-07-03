@@ -29,7 +29,7 @@ public class GameMenuState extends SState {
 
 		// フォント
         Font font = new Font("Meiryo", Font.BOLD, 16);
-        ttf = new SFont(font, true, "menumenu メニュー");
+        ttf = new SFont(font, true, "メニュー キーで スタート画面 ゲーム に戻る");
 
 	}
 
@@ -37,7 +37,9 @@ public class GameMenuState extends SState {
 	public void render(SContainer container, SGame game, Graphics g) throws SlickException {
 
 		// 文字列描画
-		ttf.drawString(20, 30);
+		ttf.drawString(20, 30, "menumenu メニュー");
+		ttf.drawString(300, 200, "Z キーでスタート画面に戻る");
+		ttf.drawString(300, 220, "X キーでゲームに戻る");
 
 	}
 
@@ -50,7 +52,7 @@ public class GameMenuState extends SState {
 		if ( input.isKeyPressed(SKeyType.CANCEL) ) {
 			game.enterState(GameStageState.class, new FadeOutTransition(), new FadeInTransition());
 		} else if ( input.isKeyPressed(SKeyType.OK) ) {
-			game.enterState(GameStageState.class, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 		}
 
 	}

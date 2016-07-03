@@ -1,6 +1,5 @@
 package net.kerupani129.sjgltest.map;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -9,19 +8,21 @@ import org.newdawn.slick.tiled.TileSet;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.gl.SAnimation;
 import net.kerupani129.sjgl.input.SInput;
 import net.kerupani129.sjgl.input.SKeyType;
 import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.TObject;
+import net.kerupani129.sjgl.map.TObjectTile;
 import net.kerupani129.sjgl.map.ai.AITranslationInTiles;
-import net.kerupani129.sjgltest.state.StartMenuState;
+import net.kerupani129.sjgltest.state.GameMenuState;
 
-public class TObjectPlayer extends TObject {
+public class TObjectPlayer extends TObjectTile {
 
 	//
 	// フィールド
 	//
-	private Animation animation;
+	private SAnimation animation;
 
 	//
 	// コンストラクタ
@@ -32,9 +33,10 @@ public class TObjectPlayer extends TObject {
 		addAI(0, new AIControllPlayer(this));
 
 		TileSet set = this.map.getTileSet(0);
-		int[] frames   = {1, 1, 1, 4};
-		int[] duration = {500, 500};
-		animation = new Animation(set.tiles, frames, duration);
+		animation = new SAnimation(set.tiles);
+		animation.addFrame(500, set.getTileX(17), set.getTileY(17));
+		animation.addFrame(500, set.getTileX(65), set.getTileY(65));
+
 	}
 
 	//
@@ -44,7 +46,7 @@ public class TObjectPlayer extends TObject {
 	 * アニメーションの取得
 	 */
 	@Override
-	protected Animation getAnimation() {
+	protected SAnimation getAnimation() {
 		return animation;
 	}
 
@@ -73,8 +75,11 @@ class AIControllPlayer extends AITranslationInTiles {
 			// 入力キーチェック
 			SInput input = container.getInput();
 
+			if ( input.isKeyPressed(SKeyType.CANCEL) ) {
+				game.enterState(GameMenuState.class, new FadeOutTransition(), new FadeInTransition());
+			}
 			if ( input.isKeyPressed(SKeyType.OK) ) {
-				game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
+				// game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 			}
 			if ( input.isKeyDown(SKeyType.RIGHT) ) {
 				startTranslationInTiles(1, 0);
@@ -93,7 +98,10 @@ class AIControllPlayer extends AITranslationInTiles {
 
 		// マップ移動
 		Rectangle rect = obj.map.getViewport();
-		obj.map.setViewportLocation(obj.getX() - rect.getWidth() / 2, obj.getY() - rect.getHeight() / 2);
+		obj.map.setViewportLocation(
+				obj.getX() - (rect.getWidth()  - obj.getWidth() ) / 2,
+				obj.getY() - (rect.getHeight() - obj.getHeight()) / 2
+				);
 
 	}
 

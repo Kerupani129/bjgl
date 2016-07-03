@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.gl.SAnimation;
 import net.kerupani129.sjgl.map.ai.TObjectAI;
 
 public abstract class TObject {
@@ -21,6 +21,7 @@ public abstract class TObject {
 	public final TMap map;
 
 	private float x = 0, y = 0;
+	private float width = 0, height = 0;
 	private Map<Class<? extends TObjectAI>, TObjectAI> aiMap = new HashMap<Class<? extends TObjectAI>, TObjectAI>();
 	private Map<Integer, TObjectAI> aiSortedMap = new TreeMap<Integer, TObjectAI>();
 
@@ -68,6 +69,14 @@ public abstract class TObject {
 	}
 
 	/**
+	 * 大きさ設定
+	 */
+	public void setSize(float width, float height) {
+		this.width  = width;
+		this.height = height;
+	}
+
+	/**
 	 * 位置 X 取得
 	 */
 	public float getX() {
@@ -82,9 +91,23 @@ public abstract class TObject {
 	}
 
 	/**
+	 * 幅取得
+	 */
+	public float getWidth() {
+		return this.width;
+	}
+
+	/**
+	 * 高さ取得
+	 */
+	public float getHeight() {
+		return this.height;
+	}
+
+	/**
 	 * アニメーションの取得
 	 */
-	protected abstract Animation getAnimation();
+	protected abstract SAnimation getAnimation();
 
     /**
      * 描画
@@ -97,11 +120,15 @@ public abstract class TObject {
 	 * 移動
 	 */
 	public final void update(SContainer container, SGame game, int delta) throws SlickException {
+		getAnimation().update(delta);
+
+		Log.debug(" TObject: ■AI 開始");
 		for (Map.Entry<Integer, TObjectAI> entry : aiSortedMap.entrySet()) {
 			TObjectAI ai = entry.getValue();
-			Log.debug(" " + entry.getKey() + " " + ai.getClass().getSimpleName());
+			Log.debug(" TObject: " + entry.getKey() + " " + ai.getClass().getSimpleName());
 			if ( !ai.isStopped() ) ai.update(container, game, delta);
 		}
+		Log.debug(" TObject: ■AI 終了");
 	}
 
 }

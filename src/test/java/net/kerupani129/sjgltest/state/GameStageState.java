@@ -2,14 +2,9 @@ package net.kerupani129.sjgltest.state;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
-import net.kerupani129.sjgl.input.SInput;
-import net.kerupani129.sjgl.input.SKeyType;
 import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.state.SState;
 import net.kerupani129.sjgltest.map.TObjectPlayer;
@@ -66,13 +61,14 @@ public class GameStageState extends SState {
 	@Override
 	public void update(SContainer container, SGame game, int delta) throws SlickException {
 
+		/*
 		// 入力キーチェック
 		SInput input = container.getInput();
 
 		if ( input.isKeyPressed(SKeyType.CANCEL) ) {
 			game.enterState(GameMenuState.class, new FadeOutTransition(), new FadeInTransition());
 		}
-		/* else if ( input.isKeyPressed(SKeyType.OK) ) {
+		if ( input.isKeyPressed(SKeyType.OK) ) {
 			game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 		}
 		if ( input.isKeyDown(SKeyType.RIGHT) ) {
@@ -92,9 +88,7 @@ public class GameStageState extends SState {
 		// マップ
 		map.update(container, game, delta);
 
-		Log.debug(" ■AI 開始");
 		player.update(container, game, delta);
-		Log.debug(" ■AI 終了");
 
 	}
 

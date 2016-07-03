@@ -90,6 +90,8 @@ public class TMap extends TiledMap {
 		g.translate(-viewport.getX(), -viewport.getY());
 		g.setWorldClip(viewport);
 		super.render(0, 0);
+		g.translate(0, 0);
+		g.clearWorldClip();
 	}
 
 	/**

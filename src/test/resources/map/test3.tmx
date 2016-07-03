@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="16">
+ <tileset firstgid="1" name="test" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+  <image source="test.png" width="512" height="512"/>
+ </tileset>
  <layer name="タイル・レイヤー1" width="50" height="50">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAAODfAC7KO00QJwAA
   </data>
  </layer>
+ <objectgroup name="オブジェクト・レイヤー 1">
+  <object id="1" name="矩形" x="225" y="122" width="166" height="154"/>
+  <object id="4" name="タイル" gid="66" x="448" y="224" width="32" height="32"/>
+  <object id="8" name="ポリゴン" x="366" y="79">
+   <polygon points="0,0 185,46 114,-24 63,-48"/>
+  </object>
+  <object id="12" name="楕円" x="308" y="382" width="132" height="72">
+   <ellipse/>
+  </object>
+  <object id="13" name="ポリライン" x="490" y="299">
+   <polyline points="0,0 98,53 68,123 -23,75"/>
+  </object>
+ </objectgroup>
 </map>
