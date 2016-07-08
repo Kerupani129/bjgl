@@ -5,9 +5,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
-import net.kerupani129.sjgltest.state.GameMenuState;
-import net.kerupani129.sjgltest.state.GameStageState;
-import net.kerupani129.sjgltest.state.StartMenuState;
+import net.kerupani129.sjgltest.state.SStateGameMenu;
+import net.kerupani129.sjgltest.state.SStateGameStage;
+import net.kerupani129.sjgltest.state.SStateStartMenu;
 
 public class Main extends SGame {
 
@@ -30,12 +30,12 @@ public class Main extends SGame {
 		super("SJGL Test");
 
 		// State 設定
-        addState(new StartMenuState());
-        addState(new GameStageState());
-        addState(new GameMenuState());
+        addState(new SStateStartMenu());
+        addState(new SStateGameStage());
+        addState(new SStateGameMenu());
 
         // 開始フェードイン
-        enterState(StartMenuState.class, new FadeInTransition(), new EmptyTransition());
+        enterState(SStateStartMenu.class, new FadeInTransition(), new EmptyTransition());
 
 	}
 

@@ -8,13 +8,13 @@ public class SAnimation extends Animation {
 	//
 	// コンストラクタ
 	//
-	public SAnimation(SpriteSheet tt) {
-		super(tt, new int[0], new int[0]);
+	public SAnimation(SpriteSheet ss) {
+		super(ss, new int[0], new int[0]);
 		super.setAutoUpdate(false);
 	}
 
 	//
-	// フィールド
+	// メソッド
 	//
 	@Override
 	@Deprecated

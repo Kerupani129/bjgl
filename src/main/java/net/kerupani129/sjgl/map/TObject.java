@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
@@ -112,8 +111,10 @@ public abstract class TObject {
     /**
      * 描画
      */
-	public final void render(SContainer container, SGame game, Graphics g) throws SlickException {
-		getAnimation().draw(x, y);
+	public final void render() {
+		SAnimation anime = getAnimation();
+		Image frame = anime.getCurrentFrame();
+		anime.draw(x, y + width - frame.getHeight());
 	}
 
 	/**
@@ -122,13 +123,13 @@ public abstract class TObject {
 	public final void update(SContainer container, SGame game, int delta) throws SlickException {
 		getAnimation().update(delta);
 
-		Log.debug(" TObject: ■AI 開始");
+		// Log.debug(" TObject: ■AI 開始");
 		for (Map.Entry<Integer, TObjectAI> entry : aiSortedMap.entrySet()) {
 			TObjectAI ai = entry.getValue();
-			Log.debug(" TObject: " + entry.getKey() + " " + ai.getClass().getSimpleName());
+			// Log.debug(" TObject: " + entry.getKey() + " " + ai.getClass().getSimpleName());
 			if ( !ai.isStopped() ) ai.update(container, game, delta);
 		}
-		Log.debug(" TObject: ■AI 終了");
+		// Log.debug(" TObject: ■AI 終了");
 	}
 
 }

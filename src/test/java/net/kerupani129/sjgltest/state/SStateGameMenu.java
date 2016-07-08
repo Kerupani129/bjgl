@@ -2,7 +2,6 @@ package net.kerupani129.sjgltest.state;
 
 import java.awt.Font;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -15,7 +14,7 @@ import net.kerupani129.sjgl.input.SInput;
 import net.kerupani129.sjgl.input.SKeyType;
 import net.kerupani129.sjgl.state.SState;
 
-public class StartMenuState extends SState {
+public class SStateGameMenu extends SState {
 
 	//
 	// フィールド
@@ -25,37 +24,25 @@ public class StartMenuState extends SState {
 	//
 	// メソッド
 	//
-    /**
-     * 初期化
-     */
 	@Override
 	public void init(SContainer container, SGame game) throws SlickException {
 
 		// フォント
         Font font = new Font("Meiryo", Font.BOLD, 16);
-        ttf = new SFont(font, true, "ほげ キーで スタート 終了");
+        ttf = new SFont(font, true, "メニュー キーで スタート画面 ゲーム に戻る");
 
 	}
 
-	/**
-	 * 描画
-	 */
 	@Override
 	public void render(SContainer container, SGame game, Graphics g) throws SlickException {
 
-		// 楕円描画
-		g.fillOval(20, 40, 600, 400);
-
 		// 文字列描画
-		ttf.drawString(20, 30, "hogehoge ほげほげ");
-		ttf.drawString(300, 200, "Z キーでスタート", Color.black);
-		ttf.drawString(300, 220, "X キーで終了", Color.black);
+		ttf.drawString(20, 30, "menumenu メニュー");
+		ttf.drawString(300, 200, "Z キーでスタート画面に戻る");
+		ttf.drawString(300, 220, "X キーでゲームに戻る");
 
 	}
 
-	/**
-	 * 移動
-	 */
 	@Override
 	public void update(SContainer container, SGame game, int delta) throws SlickException {
 
@@ -63,9 +50,9 @@ public class StartMenuState extends SState {
 		SInput input = container.getInput();
 
 		if ( input.isKeyPressed(SKeyType.CANCEL) ) {
-			container.exit();
+			game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());
 		} else if ( input.isKeyPressed(SKeyType.OK) ) {
-			game.enterState(GameStageState.class, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(SStateStartMenu.class, new FadeOutTransition(), new FadeInTransition());
 		}
 
 	}

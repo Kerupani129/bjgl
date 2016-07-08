@@ -2,10 +2,18 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="16">
  <tileset firstgid="1" name="test" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="test.png" width="512" height="512"/>
+  <tile id="17">
+   <objectgroup draworder="index">
+    <object id="3" x="0" y="0" width="32" height="32"/>
+    <object id="7" x="-32" y="-32" width="96" height="96">
+     <ellipse/>
+    </object>
+   </objectgroup>
+  </tile>
  </tileset>
  <layer name="タイル・レイヤー1" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAAODfAC7KO00QJwAA
+   H4sIAAAAAAAAC+3OAQ0AAAgDoGewf1hjXDdIQMJV0w4AAAAAAAAAAAA8sk51igMQJwAA
   </data>
  </layer>
  <objectgroup name="オブジェクト・レイヤー 1">

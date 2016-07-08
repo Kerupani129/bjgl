@@ -68,7 +68,7 @@ public abstract class SState extends BasicGameState {
      */
 	@Override
 	public final void init(GameContainer container, StateBasedGame game) throws SlickException {
-		Log.debug(" Class " + this.getClass().getSimpleName() + " has been initialized");
+		Log.debug(" SState: Class " + this.getClass().getSimpleName() + " has been initialized");
 		if ( container instanceof SContainer && game instanceof SGame ) init((SContainer)container, (SGame)game);
 		// TODO: ユーザーが拡張できるようにする
 	}
