@@ -51,6 +51,19 @@ public abstract class AITranslationInTiles extends TObjectAI {
 		return aiBackground.isTranslating();
 	}
 
+	/**
+	 * X 座標取得 (タイル単位)
+	 */
+	protected int getXInTiles() {
+		return (int) ( (obj.getX() + obj.map.getTileWidth() / 2) / obj.map.getTileWidth() );
+	}
+
+	/**
+	 * Y 座標取得 (タイル単位)
+	 */
+	protected int getYInTiles() {
+		return (int) ( (obj.getY() + obj.map.getTileHeight() / 2) / obj.map.getTileHeight() );
+	}
 
 }
 
@@ -93,6 +106,17 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 	}
 
 	/**
+	 * 位置をタイル単位に修正
+	 */
+	private void modifyLocationInTiles() {
+		int xInTiles = (int) ((translatedX + obj.map.getTileWidth()  / 2) / obj.map.getTileWidth() );
+		int yInTiles = (int) ((translatedY + obj.map.getTileHeight() / 2) / obj.map.getTileHeight());
+
+		translatedX = xInTiles * obj.map.getTileWidth();
+		translatedY = yInTiles * obj.map.getTileHeight();
+	}
+
+	/**
 	 * 移動開始
 	 */
 	public void startTranslationInTiles(int x, int y) {
@@ -127,17 +151,6 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 	}
 
 	/**
-	 * 位置をタイル単位に修正
-	 */
-	private void modifyLocationInTiles() {
-		int xInTiles = (int) ((translatedX + obj.map.getTileWidth()  / 2) / obj.map.getTileWidth() );
-		int yInTiles = (int) ((translatedY + obj.map.getTileHeight() / 2) / obj.map.getTileHeight());
-
-		translatedX = xInTiles * obj.map.getTileWidth();
-		translatedY = yInTiles * obj.map.getTileHeight();
-	}
-
-	/**
 	 * 移動中かどうか
 	 */
 	public boolean isTranslating() {
@@ -162,11 +175,12 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 			yIsTranslated = true;
 		}
 
-		if ( !isTranslating() ) {
+		if ( isTranslating() ) { // 移動中
+			obj.setLocation(translatedX, translatedY);
+		} else {                 // 移動が完了した
 			modifyLocationInTiles();
 		}
 
-		obj.setLocation(translatedX, translatedY);
 	}
 
 }

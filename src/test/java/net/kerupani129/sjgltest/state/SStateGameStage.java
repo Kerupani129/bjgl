@@ -6,16 +6,17 @@ import org.newdawn.slick.SlickException;
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.map.TMap;
+import net.kerupani129.sjgl.map.TObjectMap;
 import net.kerupani129.sjgl.state.SState;
 import net.kerupani129.sjgltest.map.TObjectPlayer;
 
-public class GameStageState extends SState {
+public class SStateGameStage extends SState {
 
 	//
 	// フィールド
 	//
     private TMap map;
-    private TObjectPlayer player;
+    // private TObjectPlayer player;
 
 	//
 	// メソッド
@@ -26,12 +27,17 @@ public class GameStageState extends SState {
     @Override
     public void init(SContainer container, SGame game) throws SlickException {
 
+    	// マップに出現させるオブジェクトのリスト
+    	TObjectMap objectClassList = new TObjectMap();
+    	objectClassList.add(TObjectPlayer.class);
+
     	// マップ読み込み
-    	map = new TMap("map/test2.tmx");
+    	map = new TMap("map/test4.tmx", objectClassList);
     	map.setViewportSize(container.getWidth(), container.getHeight());
 
     	// TODO: マップに含める
-    	player = new TObjectPlayer(map);
+    	// player = new TObjectPlayer(map);
+    	// player.setLocation(32 * 2, 32 * 4);
 
     }
 
@@ -41,17 +47,10 @@ public class GameStageState extends SState {
 	@Override
 	public void render(SContainer container, SGame game, Graphics g) throws SlickException {
 
-		// マス目描画
-		for (int x = 0; x < 20; x++) {
-			for (int y = 0; y < 15; y++) {
-				g.drawRect(x * 32 + 1, y * 32 + 1, 32 - 1 - 1 * 2, 32 - 1 - 1 * 2);
-			}
-		}
-
 		// マップ描画
 		map.render(container, game, g);
 
-		player.render(container, game, g);
+		// player.render(container, game, g);
 
 	}
 
@@ -88,7 +87,7 @@ public class GameStageState extends SState {
 		// マップ
 		map.update(container, game, delta);
 
-		player.update(container, game, delta);
+		// player.update(container, game, delta);
 
 	}
 

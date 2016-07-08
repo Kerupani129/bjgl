@@ -15,7 +15,7 @@ import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.TObject;
 import net.kerupani129.sjgl.map.TObjectTile;
 import net.kerupani129.sjgl.map.ai.AITranslationInTiles;
-import net.kerupani129.sjgltest.state.GameMenuState;
+import net.kerupani129.sjgltest.state.SStateGameMenu;
 
 public class TObjectPlayer extends TObjectTile {
 
@@ -32,10 +32,12 @@ public class TObjectPlayer extends TObjectTile {
 
 		addAI(0, new AIControllPlayer(this));
 
-		TileSet set = this.map.getTileSet(0);
+		TileSet set = this.map.getTileSet(1);
 		animation = new SAnimation(set.tiles);
-		animation.addFrame(500, set.getTileX(17), set.getTileY(17));
-		animation.addFrame(500, set.getTileX(65), set.getTileY(65));
+		animation.addFrame(250, 1, 0);
+		animation.addFrame(250, 0, 0);
+		animation.addFrame(250, 1, 0);
+		animation.addFrame(250, 2, 0);
 
 	}
 
@@ -76,22 +78,26 @@ class AIControllPlayer extends AITranslationInTiles {
 			SInput input = container.getInput();
 
 			if ( input.isKeyPressed(SKeyType.CANCEL) ) {
-				game.enterState(GameMenuState.class, new FadeOutTransition(), new FadeInTransition());
+				game.enterState(SStateGameMenu.class, new FadeOutTransition(), new FadeInTransition());
 			}
 			if ( input.isKeyPressed(SKeyType.OK) ) {
 				// game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 			}
 			if ( input.isKeyDown(SKeyType.RIGHT) ) {
-				startTranslationInTiles(1, 0);
+				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles() + 1, getYInTiles(), "blocked", "false")) )
+					startTranslationInTiles(1, 0);
 			}
 			if ( input.isKeyDown(SKeyType.DOWN) ) {
-				startTranslationInTiles(0, 1);
+				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles(), getYInTiles() + 1, "blocked", "false")) )
+					startTranslationInTiles(0, 1);
 			}
 			if ( input.isKeyDown(SKeyType.LEFT) ) {
-				startTranslationInTiles(-1, 0);
+				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles() - 1, getYInTiles(), "blocked", "false")) )
+					startTranslationInTiles(-1, 0);
 			}
 			if ( input.isKeyDown(SKeyType.UP) ) {
-				startTranslationInTiles(0, -1);
+				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles(), getYInTiles() - 1, "blocked", "false")) )
+					startTranslationInTiles(0, -1);
 			}
 
 		}
