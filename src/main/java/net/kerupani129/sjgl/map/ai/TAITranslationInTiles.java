@@ -78,7 +78,7 @@ class AIBackgroundTranslationInTiles extends TAI {
 	private float translatedX  = 0, translatedY  = 0;
 	private float speedX = 0, speedY = 0;
 	private float absSpeedX = 0, absSpeedY = 0;
-	private boolean xIsTranslated = false, yIsTranslated = false;
+	private boolean xIsTranslated = true, yIsTranslated = true;
 
 	//
 	// コンストラクタ
@@ -86,6 +86,12 @@ class AIBackgroundTranslationInTiles extends TAI {
 	public AIBackgroundTranslationInTiles(TObjectTile obj) {
 		super(obj);
 		modifyLocationInTiles();
+
+		translationX = obj.getX();
+		translationY = obj.getY();
+
+		translatedX = translationX;
+		translatedY = translationY;
 	}
 
 	//
@@ -166,19 +172,30 @@ class AIBackgroundTranslationInTiles extends TAI {
 	 */
 	@Override
 	public void update(SContainer container, SGame game, int delta) throws SlickException {
+
+		// X 方向
 		if ( (translationX - translatedX) / speedX > 0 ) { // 移動中
 			translatedX += speedX * delta / 1000;
-		} else {                                           // 移動が完了した
+			if ( (translationX - translatedX) / speedX <= 0 ) {
+				translatedX = translationX;
+			}
+		} else { // 移動が完了した
 			translatedX = translationX;
 			xIsTranslated = true;
 		}
+
+		// Y 方向
 		if ( (translationY - translatedY) / speedY > 0 ) { // 移動中
 			translatedY += speedY * delta / 1000;
-		} else {                                           // 移動が完了した
+			if ( (translationY - translatedY) / speedY <= 0 ) {
+				translatedY = translationY;
+			}
+		} else { // 移動が完了した
 			translatedY = translationY;
 			yIsTranslated = true;
 		}
 
+		// obj に反映
 		if ( isTranslating() ) { // 移動中
 			obj.setLocation(translatedX, translatedY);
 			((TObjectTile) obj).setTranslating(true);
@@ -186,6 +203,7 @@ class AIBackgroundTranslationInTiles extends TAI {
 			modifyLocationInTiles();
 			((TObjectTile) obj).setTranslating(false);
 		}
+
 	}
 
 }
