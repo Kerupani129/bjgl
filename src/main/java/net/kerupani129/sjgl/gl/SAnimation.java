@@ -11,6 +11,7 @@ public class SAnimation extends Animation {
 	public SAnimation(SpriteSheet ss) {
 		super(ss, new int[0], new int[0]);
 		super.setAutoUpdate(false);
+		super.setLooping(false);
 	}
 
 	//

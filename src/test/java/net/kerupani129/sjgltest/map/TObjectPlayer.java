@@ -8,21 +8,16 @@ import org.newdawn.slick.tiled.TileSet;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
-import net.kerupani129.sjgl.gl.SAnimation;
 import net.kerupani129.sjgl.input.SInput;
 import net.kerupani129.sjgl.input.SKeyType;
 import net.kerupani129.sjgl.map.TMap;
-import net.kerupani129.sjgl.map.TObject;
-import net.kerupani129.sjgl.map.TObjectTile;
-import net.kerupani129.sjgl.map.ai.AITranslationInTiles;
+import net.kerupani129.sjgl.map.ai.TAITranslationInTiles;
+import net.kerupani129.sjgl.map.object.TDirection;
+import net.kerupani129.sjgl.map.object.TObjectCharactor;
+import net.kerupani129.sjgl.map.object.TObjectTile;
 import net.kerupani129.sjgltest.state.SStateGameMenu;
 
-public class TObjectPlayer extends TObjectTile {
-
-	//
-	// フィールド
-	//
-	private SAnimation animation;
+public class TObjectPlayer extends TObjectCharactor {
 
 	//
 	// コンストラクタ
@@ -30,39 +25,23 @@ public class TObjectPlayer extends TObjectTile {
 	public TObjectPlayer(TMap map) {
 		super(map);
 
-		addAI(0, new AIControllPlayer(this));
+		addAI(0, new TAIControllPlayer(this));
 
-		TileSet set = this.map.getTileSet(1);
-		animation = new SAnimation(set.tiles);
-		animation.addFrame(250, 1, 0);
-		animation.addFrame(250, 0, 0);
-		animation.addFrame(250, 1, 0);
-		animation.addFrame(250, 2, 0);
+		TileSet set = this.map.getTileSet("bng");
 
-	}
+		setCharactorAnimation(set.tiles);
 
-	//
-	// メソッド
-	//
-	/**
-	 * アニメーションの取得
-	 */
-	@Override
-	protected SAnimation getAnimation() {
-		return animation;
 	}
 
 }
 
-class AIControllPlayer extends AITranslationInTiles {
+class TAIControllPlayer extends TAITranslationInTiles {
 
 	//
 	// コンストラクタ
 	//
-	public AIControllPlayer(TObject obj) {
+	public TAIControllPlayer(TObjectTile obj) {
 		super(obj);
-
-		setAbsoluteSpeed(4, 4);
 	}
 
 	//
@@ -84,18 +63,22 @@ class AIControllPlayer extends AITranslationInTiles {
 				// game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
 			}
 			if ( input.isKeyDown(SKeyType.RIGHT) ) {
+				((TObjectTile) obj).setDirection(TDirection.RIGHT);
 				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles() + 1, getYInTiles(), "blocked", "false")) )
 					startTranslationInTiles(1, 0);
 			}
 			if ( input.isKeyDown(SKeyType.DOWN) ) {
+				((TObjectTile) obj).setDirection(TDirection.DOWN);
 				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles(), getYInTiles() + 1, "blocked", "false")) )
 					startTranslationInTiles(0, 1);
 			}
 			if ( input.isKeyDown(SKeyType.LEFT) ) {
+				((TObjectTile) obj).setDirection(TDirection.LEFT);
 				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles() - 1, getYInTiles(), "blocked", "false")) )
 					startTranslationInTiles(-1, 0);
 			}
 			if ( input.isKeyDown(SKeyType.UP) ) {
+				((TObjectTile) obj).setDirection(TDirection.UP);
 				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles(), getYInTiles() - 1, "blocked", "false")) )
 					startTranslationInTiles(0, -1);
 			}

@@ -3,6 +3,8 @@ package net.kerupani129.sjgl.map;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+import net.kerupani129.sjgl.map.object.TObject;
+
 public class TObjectMap extends HashMap<String, Class<? extends TObject>> {
 
 	//

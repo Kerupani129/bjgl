@@ -1,4 +1,4 @@
-package net.kerupani129.sjgl.map;
+package net.kerupani129.sjgl.map.layer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,9 @@ import org.newdawn.slick.tiled.Layer;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.map.TMap;
+import net.kerupani129.sjgl.map.TObjectMap;
+import net.kerupani129.sjgl.map.object.TObject;
 
 public class TLayerObject extends TLayer {
 

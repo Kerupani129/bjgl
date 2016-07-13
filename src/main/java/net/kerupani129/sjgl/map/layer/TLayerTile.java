@@ -1,6 +1,8 @@
-package net.kerupani129.sjgl.map;
+package net.kerupani129.sjgl.map.layer;
 
 import org.newdawn.slick.tiled.Layer;
+
+import net.kerupani129.sjgl.map.TMap;
 
 public class TLayerTile extends TLayer {
 

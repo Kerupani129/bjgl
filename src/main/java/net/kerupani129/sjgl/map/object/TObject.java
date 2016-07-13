@@ -1,4 +1,4 @@
-package net.kerupani129.sjgl.map;
+package net.kerupani129.sjgl.map.object;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,8 @@ import org.newdawn.slick.SlickException;
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.gl.SAnimation;
-import net.kerupani129.sjgl.map.ai.TObjectAI;
+import net.kerupani129.sjgl.map.TMap;
+import net.kerupani129.sjgl.map.ai.TAI;
 
 public abstract class TObject {
 
@@ -21,8 +22,9 @@ public abstract class TObject {
 
 	private float x = 0, y = 0;
 	private float width = 0, height = 0;
-	private Map<Class<? extends TObjectAI>, TObjectAI> aiMap = new HashMap<Class<? extends TObjectAI>, TObjectAI>();
-	private Map<Integer, TObjectAI> aiSortedMap = new TreeMap<Integer, TObjectAI>();
+
+	private Map<Class<? extends TAI>, TAI> aiMap = new HashMap<Class<? extends TAI>, TAI>();
+	private Map<Integer, TAI> aiSortedMap = new TreeMap<Integer, TAI>();
 
 	//
 	// コンストラクタ
@@ -38,7 +40,7 @@ public abstract class TObject {
 	 * AI 追加
 	 */
 	// TODO: priority の重複を許す
-	public void addAI(int priority, TObjectAI ai) {
+	public void addAI(int priority, TAI ai) {
 		aiMap.put(ai.getClass(), ai);
 		aiSortedMap.put(priority, ai);
 	}
@@ -47,7 +49,7 @@ public abstract class TObject {
 	 * AI 取得
 	 * AI が見つからなければ null を返す
 	 */
-	public TObjectAI getAI(Class<? extends TObjectAI> oclass) {
+	public TAI getAI(Class<? extends TAI> oclass) {
 		return aiMap.get(oclass);
 	}
 
@@ -112,20 +114,28 @@ public abstract class TObject {
      * 描画
      */
 	public final void render() {
+
 		SAnimation anime = getAnimation();
-		Image frame = anime.getCurrentFrame();
-		anime.draw(x, y + width - frame.getHeight());
+		if ( anime != null && anime.getFrameCount() > 0 ) {
+			Image frame = anime.getCurrentFrame();
+			anime.draw(x, y + width - frame.getHeight());
+		}
+
 	}
 
 	/**
 	 * 移動
 	 */
 	public final void update(SContainer container, SGame game, int delta) throws SlickException {
-		getAnimation().update(delta);
+
+		SAnimation anime = getAnimation();
+		if ( anime != null && anime.getFrameCount() > 0 ) {
+			anime.update(delta);
+		}
 
 		// Log.debug(" TObject: ■AI 開始");
-		for (Map.Entry<Integer, TObjectAI> entry : aiSortedMap.entrySet()) {
-			TObjectAI ai = entry.getValue();
+		for (Map.Entry<Integer, TAI> entry : aiSortedMap.entrySet()) {
+			TAI ai = entry.getValue();
 			// Log.debug(" TObject: " + entry.getKey() + " " + ai.getClass().getSimpleName());
 			if ( !ai.isStopped() ) ai.update(container, game, delta);
 		}

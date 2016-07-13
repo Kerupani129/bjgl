@@ -4,9 +4,9 @@ import org.newdawn.slick.SlickException;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
-import net.kerupani129.sjgl.map.TObject;
+import net.kerupani129.sjgl.map.object.TObjectTile;
 
-public abstract class AITranslationInTiles extends TObjectAI {
+public abstract class TAITranslationInTiles extends TAI {
 
 	//
 	// フィールド
@@ -16,7 +16,7 @@ public abstract class AITranslationInTiles extends TObjectAI {
 	//
 	// コンストラクタ
 	//
-	public AITranslationInTiles(TObject obj) {
+	public TAITranslationInTiles(TObjectTile obj) {
 		super(obj);
 
 		aiBackground = (AIBackgroundTranslationInTiles) obj.getAI(AIBackgroundTranslationInTiles.class);
@@ -24,6 +24,8 @@ public abstract class AITranslationInTiles extends TObjectAI {
 			aiBackground = new AIBackgroundTranslationInTiles(obj);
 			obj.addAI(-1, aiBackground);
 		}
+
+		setAbsoluteSpeed(128, 128);
 
 	}
 
@@ -67,7 +69,7 @@ public abstract class AITranslationInTiles extends TObjectAI {
 
 }
 
-class AIBackgroundTranslationInTiles extends TObjectAI {
+class AIBackgroundTranslationInTiles extends TAI {
 
 	//
 	// フィールド
@@ -81,7 +83,7 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 	//
 	// コンストラクタ
 	//
-	public AIBackgroundTranslationInTiles(TObject obj) {
+	public AIBackgroundTranslationInTiles(TObjectTile obj) {
 		super(obj);
 		modifyLocationInTiles();
 	}
@@ -109,11 +111,13 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 	 * 位置をタイル単位に修正
 	 */
 	private void modifyLocationInTiles() {
-		int xInTiles = (int) ((translatedX + obj.map.getTileWidth()  / 2) / obj.map.getTileWidth() );
-		int yInTiles = (int) ((translatedY + obj.map.getTileHeight() / 2) / obj.map.getTileHeight());
+		int xInTiles = (int) ((obj.getX() + obj.map.getTileWidth()  / 2) / obj.map.getTileWidth() );
+		int yInTiles = (int) ((obj.getY() + obj.map.getTileHeight() / 2) / obj.map.getTileHeight());
 
 		translatedX = xInTiles * obj.map.getTileWidth();
 		translatedY = yInTiles * obj.map.getTileHeight();
+
+		obj.setLocation(translatedX, translatedY);
 	}
 
 	/**
@@ -163,13 +167,13 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 	@Override
 	public void update(SContainer container, SGame game, int delta) throws SlickException {
 		if ( (translationX - translatedX) / speedX > 0 ) { // 移動中
-			translatedX += speedX;
+			translatedX += speedX * delta / 1000;
 		} else {                                           // 移動が完了した
 			translatedX = translationX;
 			xIsTranslated = true;
 		}
 		if ( (translationY - translatedY) / speedY > 0 ) { // 移動中
-			translatedY += speedY;
+			translatedY += speedY * delta / 1000;
 		} else {                                           // 移動が完了した
 			translatedY = translationY;
 			yIsTranslated = true;
@@ -177,10 +181,11 @@ class AIBackgroundTranslationInTiles extends TObjectAI {
 
 		if ( isTranslating() ) { // 移動中
 			obj.setLocation(translatedX, translatedY);
+			((TObjectTile) obj).setTranslating(true);
 		} else {                 // 移動が完了した
 			modifyLocationInTiles();
+			((TObjectTile) obj).setTranslating(false);
 		}
-
 	}
 
 }

@@ -10,10 +10,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.Layer;
+import org.newdawn.slick.tiled.TileSet;
 import org.newdawn.slick.tiled.TiledMap;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.map.layer.TLayer;
+import net.kerupani129.sjgl.map.layer.TLayerObject;
+import net.kerupani129.sjgl.map.layer.TLayerTile;
 
 // TODO: マップファイルの仕様通りに拡張する (現在は最低限の機能しかない)
 public class TMap extends TiledMap {
@@ -179,6 +183,22 @@ public class TMap extends TiledMap {
 		for (TLayer layer : layerList) {
 			layer.render(x, y, sx, sy, width, height, lineByLine);
 		}
+	}
+
+	public int getTileSetIndex(String name) {
+
+		for (int i = 0; i < this.tileSets.size(); ++i) {
+			TileSet tileset = (TileSet) this.tileSets.get(i);
+			if (tileset.name.equals(name)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	public TileSet getTileSet(String name) {
+		return (TileSet) this.tileSets.get(getTileSetIndex(name));
 	}
 
 }

@@ -1,10 +1,11 @@
-package net.kerupani129.sjgl.map;
+package net.kerupani129.sjgl.map.layer;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.Layer;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.map.TMap;
 
 public abstract class TLayer {
 

@@ -4,9 +4,9 @@ import org.newdawn.slick.SlickException;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
-import net.kerupani129.sjgl.map.TObject;
+import net.kerupani129.sjgl.map.object.TObject;
 
-public abstract class TObjectAI {
+public abstract class TAI {
 
 	//
 	// フィールド
@@ -17,20 +17,13 @@ public abstract class TObjectAI {
 	//
 	// コンストラクタ
 	//
-	public TObjectAI(TObject obj) {
+	public TAI(TObject obj) {
 		this.obj = obj;
 	}
 
 	//
 	// メソッド
 	//
-	/**
-	 * オブジェクト取得
-	 */
-	protected TObject getObject() {
-		return obj;
-	}
-
 	/**
 	 * AI が止まっているかどうかチェック
 	 */
