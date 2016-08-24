@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="56">
+ <properties>
+  <property name="player" value="TObjectPlayer"/>
+ </properties>
  <tileset firstgid="1" name="test4" tilewidth="32" tileheight="32" tilecount="8" columns="4">
   <image source="test4.png" width="128" height="64"/>
   <tile id="0">
@@ -36,20 +39,25 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="21" name="bng" tilewidth="64" tileheight="64" tilecount="4" columns="1">
-  <image source="bng.png" width="96" height="256"/>
+ <tileset firstgid="21" name="enemy" tilewidth="32" tileheight="64" tilecount="12" columns="3">
+  <image source="enemy.png" width="96" height="256"/>
+  <tile id="1">
+   <properties>
+    <property name="type" value="TObjectEnemy"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="tile" width="50" height="50">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2YQQrDMAwEnYa0//9xTwUjKiG7ESttdZiDwYIdyNpJzjHGScIx8RDriLkoromnWEfMRfEyiJhDeBwG3jn5zFl49877PB6XgXdOPnMW3r3zPo9HBar3A9nFX9D6ic61itZPdK5VMp3xd3igc9zlIXuCzrXrIXuCzrXrUb0fmhc6xyp9f+SCpR9Vc2sefX/kgKUfmhc6xyp9f+SCpR8VM7dHftojF/Ld6vOPF51rx+PbP150rh0PlvuDyUNbV4HNo/r7rvwerO7B0nMWD21dBTaPPq9ywNbz6h7/wBuF7ohDECcAAA==
   </data>
  </layer>
- <layer name="bng" width="50" height="50">
+ <layer name="obj" width="50" height="50">
   <properties>
    <property name="type" value="object"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OIQEAAAwCMPT7B34EJGZLsARobh0AAAAAAAAAAACqB+5ulAYQJwAA
+   H4sIAAAAAAAAC+3OMREAAAgEIGcD2D+qETynXyABVcCl0wFeJh0AAAAAAAAAACBiAQRQB4MQJwAA
   </data>
  </layer>
 </map>

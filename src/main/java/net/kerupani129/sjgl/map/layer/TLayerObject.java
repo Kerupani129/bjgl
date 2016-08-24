@@ -17,7 +17,7 @@ public class TLayerObject extends TLayer {
 	//
 	// フィールド
 	//
-	List<TObject> objectList = new ArrayList<TObject>();
+	private List<TObject> objectList = new ArrayList<TObject>();
 
 	//
 	// コンストラクタ
@@ -54,6 +54,20 @@ public class TLayerObject extends TLayer {
 		for (TObject object : objectList) {
 			object.update(container, game, delta);
 		}
+	}
+
+	public List<TObject> getObjects() {
+		return objectList;
+	}
+
+	public List<TObject> getObjects(String type) {
+		List<TObject> list = new ArrayList<TObject>();
+		for (TObject obj : objectList) {
+			if ( obj.getClass().getSimpleName().equals(type) ) {
+				list.add(obj);
+			}
+		}
+		return list;
 	}
 
 }

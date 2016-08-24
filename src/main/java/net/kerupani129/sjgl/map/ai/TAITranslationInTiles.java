@@ -1,9 +1,13 @@
 package net.kerupani129.sjgl.map.ai;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.newdawn.slick.SlickException;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.map.object.TDirection;
 import net.kerupani129.sjgl.map.object.TObjectTile;
 
 public abstract class TAITranslationInTiles extends TAI {
@@ -12,6 +16,8 @@ public abstract class TAITranslationInTiles extends TAI {
 	// フィールド
 	//
 	private AIBackgroundTranslationInTiles aiBackground;
+
+	private Map<TDirection, PointInt> dirToPointMap = new HashMap<TDirection, PointInt>(4);
 
 	//
 	// コンストラクタ
@@ -26,6 +32,11 @@ public abstract class TAITranslationInTiles extends TAI {
 		}
 
 		setAbsoluteSpeed(128, 128);
+
+		dirToPointMap.put(TDirection.RIGHT, new PointInt( 1,  0));
+		dirToPointMap.put(TDirection.DOWN , new PointInt( 0,  1));
+		dirToPointMap.put(TDirection.LEFT , new PointInt(-1,  0));
+		dirToPointMap.put(TDirection.UP   , new PointInt( 0, -1));
 
 	}
 
@@ -46,6 +57,21 @@ public abstract class TAITranslationInTiles extends TAI {
 		aiBackground.startTranslationInTiles(x, y);
 	}
 
+	// TODO: 当たり判定をしたくない場合はどうするか
+	protected void startTranslationInOneTile(TDirection dir) {
+
+		((TObjectTile) obj).setDirection(dir);
+
+		PointInt point = dirToPointMap.get(dir);
+
+		int x = point.getX();
+		int y = point.getY();
+
+		if ( "false".equals(obj.map.getTilePropertyInTiles(((TObjectTile) obj).getXInTiles() + x, ((TObjectTile) obj).getYInTiles() + y, "blocked", "false")) )
+			startTranslationInTiles(x, y);
+
+	}
+
 	/**
 	 * 移動中かどうか
 	 */
@@ -53,18 +79,17 @@ public abstract class TAITranslationInTiles extends TAI {
 		return aiBackground.isTranslating();
 	}
 
-	/**
-	 * X 座標取得 (タイル単位)
-	 */
-	protected int getXInTiles() {
-		return (int) ( (obj.getX() + obj.map.getTileWidth() / 2) / obj.map.getTileWidth() );
-	}
-
-	/**
-	 * Y 座標取得 (タイル単位)
-	 */
-	protected int getYInTiles() {
-		return (int) ( (obj.getY() + obj.map.getTileHeight() / 2) / obj.map.getTileHeight() );
+	//
+	// インナークラス
+	//
+	class PointInt {
+		private int x = 0, y = 0;
+		public PointInt(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		public int getX() { return x; }
+		public int getY() { return y; }
 	}
 
 }

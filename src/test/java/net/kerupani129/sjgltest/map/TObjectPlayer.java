@@ -14,8 +14,8 @@ import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.ai.TAITranslationInTiles;
 import net.kerupani129.sjgl.map.object.TDirection;
 import net.kerupani129.sjgl.map.object.TObjectCharactor;
-import net.kerupani129.sjgl.map.object.TObjectTile;
 import net.kerupani129.sjgltest.state.SStateGameMenu;
+import net.kerupani129.sjgltest.state.SStateGameStage;
 
 public class TObjectPlayer extends TObjectCharactor {
 
@@ -40,7 +40,7 @@ class TAIControllPlayer extends TAITranslationInTiles {
 	//
 	// コンストラクタ
 	//
-	public TAIControllPlayer(TObjectTile obj) {
+	public TAIControllPlayer(TObjectPlayer obj) {
 		super(obj);
 	}
 
@@ -60,27 +60,21 @@ class TAIControllPlayer extends TAITranslationInTiles {
 				game.enterState(SStateGameMenu.class, new FadeOutTransition(), new FadeInTransition());
 			}
 			if ( input.isKeyPressed(SKeyType.OK) ) {
-				// game.enterState(StartMenuState.class, new FadeOutTransition(), new FadeInTransition());
+				// マップ切り替え処理
+				obj.map.manager.enterMap("test4.tmx");
+				game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());
 			}
 			if ( input.isKeyDown(SKeyType.RIGHT) ) {
-				((TObjectTile) obj).setDirection(TDirection.RIGHT);
-				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles() + 1, getYInTiles(), "blocked", "false")) )
-					startTranslationInTiles(1, 0);
+				startTranslationInOneTile(TDirection.RIGHT);
 			}
 			if ( input.isKeyDown(SKeyType.DOWN) ) {
-				((TObjectTile) obj).setDirection(TDirection.DOWN);
-				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles(), getYInTiles() + 1, "blocked", "false")) )
-					startTranslationInTiles(0, 1);
+				startTranslationInOneTile(TDirection.DOWN);
 			}
 			if ( input.isKeyDown(SKeyType.LEFT) ) {
-				((TObjectTile) obj).setDirection(TDirection.LEFT);
-				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles() - 1, getYInTiles(), "blocked", "false")) )
-					startTranslationInTiles(-1, 0);
+				startTranslationInOneTile(TDirection.LEFT);
 			}
 			if ( input.isKeyDown(SKeyType.UP) ) {
-				((TObjectTile) obj).setDirection(TDirection.UP);
-				if ( "false".equals(obj.map.getTilePropertyInTiles(getXInTiles(), getYInTiles() - 1, "blocked", "false")) )
-					startTranslationInTiles(0, -1);
+				startTranslationInOneTile(TDirection.UP);
 			}
 
 		}

@@ -18,6 +18,7 @@ import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.map.layer.TLayer;
 import net.kerupani129.sjgl.map.layer.TLayerObject;
 import net.kerupani129.sjgl.map.layer.TLayerTile;
+import net.kerupani129.sjgl.map.object.TObject;
 
 // TODO: マップファイルの仕様通りに拡張する (現在は最低限の機能しかない)
 public class TMap extends TiledMap {
@@ -29,14 +30,18 @@ public class TMap extends TiledMap {
 	private Rectangle viewport = new Rectangle(0, 0, 0, 0);
 	private List<TLayer> layerList =  new ArrayList<TLayer>();
 
+	public final TMapManager manager;
+
 	//
 	// コンストラクタ
 	//
 	/**
 	 * パス文字列から TiledMap を読み込む
 	 */
-	public TMap(String path, TObjectMap objectMap) throws SlickException {
+	public TMap(TMapManager manager, String path, TObjectMap objectMap) throws SlickException {
 		super(path, getParent(path));
+
+		this.manager = manager;
 
 		// レイヤーパース
         @SuppressWarnings("unchecked")
@@ -53,6 +58,8 @@ public class TMap extends TiledMap {
 				layerList.add(new TLayerTile(this, layer));
 				break;
 			case "object":
+			case "event":
+			case "item":
 				layerList.add(new TLayerObject(this, layer, objectMap));
 				break;
 			case "image":
@@ -199,6 +206,28 @@ public class TMap extends TiledMap {
 
 	public TileSet getTileSet(String name) {
 		return (TileSet) this.tileSets.get(getTileSetIndex(name));
+	}
+
+	public List<TObject> getObjects() {
+		List<TObject> list = new ArrayList<TObject>();
+		for (TLayer layer : layerList) {
+			if (layer instanceof TLayerObject)
+				list.addAll(((TLayerObject) layer).getObjects());
+		}
+		return list;
+	}
+
+	public List<TObject> getObjects(String type) {
+		List<TObject> list = new ArrayList<TObject>();
+		for (TLayer layer : layerList) {
+			if (layer instanceof TLayerObject)
+				list.addAll(((TLayerObject) layer).getObjects(type));
+		}
+		return list;
+	}
+
+	public List<TObject> getPlayers() {
+		return getObjects(getMapProperty("player", null));
 	}
 
 }

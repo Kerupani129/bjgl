@@ -37,4 +37,12 @@ public abstract class TObjectTile extends TObject {
 		return isTranslating;
 	}
 
+	public int getXInTiles() {
+		return (int) ( (this.getX() + this.map.getTileWidth() / 2) / this.map.getTileWidth() );
+	}
+
+	public int getYInTiles() {
+		return (int) ( (this.getY() + this.map.getTileHeight() / 2) / this.map.getTileHeight() );
+	}
+
 }

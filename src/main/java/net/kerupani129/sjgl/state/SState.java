@@ -106,4 +106,32 @@ public abstract class SState extends BasicGameState {
 	 */
 	public abstract void update(SContainer container, SGame game, int delta) throws SlickException;
 
+	/**
+	 *
+	 */
+	@Override
+	public final void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		if ( container instanceof SContainer && game instanceof SGame ) enter((SContainer)container, (SGame)game);
+		// TODO: ユーザーが拡張できるようにする
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public final void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		if ( container instanceof SContainer && game instanceof SGame ) leave((SContainer)container, (SGame)game);
+		// TODO: ユーザーが拡張できるようにする
+	}
+
+	/**
+	 *
+	 */
+	public void enter(SContainer container, SGame game) throws SlickException {}
+
+	/**
+	 *
+	 */
+	public void leave(SContainer container, SGame game) throws SlickException {}
+
 }

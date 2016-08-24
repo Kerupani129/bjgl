@@ -26,6 +26,8 @@ public class SGame extends StateBasedGame {
 	private Transition enterTransition;
 	private Transition leaveTransition;
 
+	private SState prevState;
+
     //
     // コンストラクタ
     //
@@ -162,6 +164,15 @@ public class SGame extends StateBasedGame {
 	}
 
 	/**
+	 *
+	 */
+	@Override
+	protected final void preUpdateState(GameContainer container, int delta) throws SlickException {
+		prevState = getCurrentState();
+		// TODO: ユーザーが拡張できるようにする
+	}
+
+	/**
 	 * update 後の処理
 	 */
 	@Override
@@ -182,6 +193,13 @@ public class SGame extends StateBasedGame {
 	@Override
 	public SContainer getContainer() {
 		return (SContainer)super.getContainer();
+	}
+
+	/**
+	 *
+	 */
+	public SState getPrevState() {
+		return this.prevState;
 	}
 
 }
