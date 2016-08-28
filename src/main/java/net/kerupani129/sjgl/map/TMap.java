@@ -54,16 +54,17 @@ public class TMap extends TiledMap {
         	// オブジェクトレイヤーかどうか
 			String isObjectLayer = getLayerProperty(index, "type", "tile");
 			switch (isObjectLayer) {
-			case "tile":
-				layerList.add(new TLayerTile(this, layer));
+			case "image":
+				// TODO: 画像レイヤーに対応
 				break;
 			case "object":
 			// case "event":
 			// case "item":
 				layerList.add(new TLayerObject(this, layer, objectMap));
 				break;
-			case "image":
-				// TODO: 画像レイヤーに対応
+			case "tile":
+			default:
+				layerList.add(new TLayerTile(this, layer));
 				break;
 			}
         }
