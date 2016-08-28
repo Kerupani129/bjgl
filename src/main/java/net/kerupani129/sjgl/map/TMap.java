@@ -58,8 +58,8 @@ public class TMap extends TiledMap {
 				layerList.add(new TLayerTile(this, layer));
 				break;
 			case "object":
-			case "event":
-			case "item":
+			// case "event":
+			// case "item":
 				layerList.add(new TLayerObject(this, layer, objectMap));
 				break;
 			case "image":
