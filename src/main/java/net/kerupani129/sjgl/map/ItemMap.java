@@ -4,14 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Properties;
 
-import net.kerupani129.sjgl.map.object.TObject;
+import net.kerupani129.sjgl.map.item.Item;
 
-public class TObjectMap extends HashMap<String, Class<? extends TObject>> {
+public class ItemMap extends HashMap<String, Class<? extends Item>> {
 
 	//
 	// メソッド
 	//
-	public boolean add(Class<? extends TObject> oclass) {
+	public boolean add(Class<? extends Item> oclass) {
 		String key = oclass.getSimpleName();
 		if ( !this.containsKey(key) ) {
 			this.put(key, oclass);
@@ -21,9 +21,9 @@ public class TObjectMap extends HashMap<String, Class<? extends TObject>> {
 		}
 	}
 
-	public TObject newInstance(String key, TMap map, Properties props) {
+	public Item newInstance(String key, Properties props) {
 		try {
-			TObject obj = get(key).getConstructor(TMap.class, Properties.class).newInstance(map, props);
+			Item obj = get(key).getConstructor(Properties.class).newInstance(props);
 			return obj;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException | NullPointerException e) {

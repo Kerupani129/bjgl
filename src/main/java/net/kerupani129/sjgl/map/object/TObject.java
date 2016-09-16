@@ -2,6 +2,7 @@ package net.kerupani129.sjgl.map.object;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import org.newdawn.slick.Image;
@@ -19,6 +20,7 @@ public abstract class TObject {
 	// フィールド
 	//
 	public final TMap map;
+	private final Properties props;
 
 	private float x = 0, y = 0;
 	private float width = 0, height = 0;
@@ -29,8 +31,9 @@ public abstract class TObject {
 	//
 	// コンストラクタ
 	//
-	public TObject(TMap map) {
+	public TObject(TMap map, Properties props) {
 		this.map = map;
+		this.props = props;
 	}
 
 	//
@@ -140,6 +143,17 @@ public abstract class TObject {
 			if ( !ai.isStopped() ) ai.update(container, game, delta);
 		}
 		// Log.debug(" TObject: ■AI 終了");
+	}
+
+	/**
+	 *
+	 */
+	public String getProperty(String key, String def) {
+		return props == null ? def : props.getProperty(key, def);
+	}
+
+	public int getTileID() {
+		return Integer.parseInt(getProperty("tileID", "" + 0));
 	}
 
 }

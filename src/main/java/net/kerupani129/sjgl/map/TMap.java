@@ -18,6 +18,8 @@ import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.map.layer.TLayer;
 import net.kerupani129.sjgl.map.layer.TLayerObject;
 import net.kerupani129.sjgl.map.layer.TLayerTile;
+import net.kerupani129.sjgl.map.object.TEventWarp;
+import net.kerupani129.sjgl.map.object.TItem;
 import net.kerupani129.sjgl.map.object.TObject;
 
 // TODO: マップファイルの仕様通りに拡張する (現在は最低限の機能しかない)
@@ -30,6 +32,8 @@ public class TMap extends TiledMap {
 	private Rectangle viewport = new Rectangle(0, 0, 0, 0);
 	private List<TLayer> layerList =  new ArrayList<TLayer>();
 
+	private String playerClassName;
+
 	public final TMapManager manager;
 
 	//
@@ -38,10 +42,14 @@ public class TMap extends TiledMap {
 	/**
 	 * パス文字列から TiledMap を読み込む
 	 */
-	public TMap(TMapManager manager, String path, TObjectMap objectMap) throws SlickException {
+	public TMap(TMapManager manager, String path, TObjectMap objectMap, ItemMap itemMap) throws SlickException {
 		super(path, getParent(path));
 
 		this.manager = manager;
+
+		// 基本的な TObject の設定
+		objectMap.add(TEventWarp.class);
+		objectMap.add(TItem.class);
 
 		// レイヤーパース
         @SuppressWarnings("unchecked")
@@ -58,9 +66,9 @@ public class TMap extends TiledMap {
 				// TODO: 画像レイヤーに対応
 				break;
 			case "object":
-			// case "event":
-			// case "item":
-				layerList.add(new TLayerObject(this, layer, objectMap));
+			case "event":
+			case "item":
+				layerList.add(new TLayerObject(this, layer, objectMap, itemMap));
 				break;
 			case "tile":
 			default:
@@ -68,6 +76,9 @@ public class TMap extends TiledMap {
 				break;
 			}
         }
+
+        // プレイヤークラス名の取得
+        playerClassName = getMapProperty("player", null);
 
 	}
 
@@ -228,7 +239,7 @@ public class TMap extends TiledMap {
 	}
 
 	public List<TObject> getPlayers() {
-		return getObjects(getMapProperty("player", null));
+		return getObjects(playerClassName);
 	}
 
 }

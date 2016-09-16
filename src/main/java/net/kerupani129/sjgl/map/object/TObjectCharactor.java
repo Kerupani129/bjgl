@@ -1,6 +1,9 @@
 package net.kerupani129.sjgl.map.object;
 
+import java.util.Properties;
+
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.tiled.TileSet;
 
 import net.kerupani129.sjgl.gl.SAnimation;
 import net.kerupani129.sjgl.map.TMap;
@@ -15,8 +18,14 @@ public class TObjectCharactor extends TObjectTile {
 	//
 	// コンストラクタ
 	//
-	public TObjectCharactor(TMap map) {
-		super(map);
+	public TObjectCharactor(TMap map, Properties props) {
+		super(map, props);
+
+		int tileID = getTileID();
+		TileSet set = map.findTileSet(tileID);
+
+		setCharactorAnimation(set.tiles);
+
 	}
 
 	//
@@ -31,6 +40,7 @@ public class TObjectCharactor extends TObjectTile {
 		setCharactorAnimation(ss, 125);
 	}
 
+	// TODO: 複数キャラが一枚の SpriteSheet になっている場合に対応が必要
 	protected void setCharactorAnimation(SpriteSheet ss, int duration) {
 		for (int i = 0; i < animeationArray.length; i++) {
 			animeationArray[i] = new SAnimation(ss);

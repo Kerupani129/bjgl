@@ -2,14 +2,19 @@ package net.kerupani129.sjgl.map.layer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.Layer;
+import org.newdawn.slick.tiled.TileSet;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.map.ItemMap;
 import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.TObjectMap;
+import net.kerupani129.sjgl.map.item.Item;
+import net.kerupani129.sjgl.map.object.TItem;
 import net.kerupani129.sjgl.map.object.TObject;
 
 public class TLayerObject extends TLayer {
@@ -22,26 +27,56 @@ public class TLayerObject extends TLayer {
 	//
 	// コンストラクタ
 	//
-	public TLayerObject(TMap map, Layer layer, TObjectMap objectMap) {
+	public TLayerObject(TMap map, Layer layer, TObjectMap objectMap, ItemMap itemMap) {
 		super(map, layer);
 
-		// TObject をパース
-		for (int x = 0; x < layer.width; x++) {
-			for (int y = 0; y < layer.width; y++) {
-				int tileID = layer.getTileID(x, y);
-				String type = map.getTileProperty(tileID, "type", null);
-				if ( type != null ) {
-					TObject object = objectMap.newInstance(type, map);
-					object.setLocation(x * map.getTileWidth(), y * map.getTileHeight());
-					objectList.add(object);
-				}
-			}
-		}
+		parseObjects(objectMap, itemMap);
 	}
 
 	//
 	// メソッド
 	//
+	protected void parseObjects(TObjectMap objectMap, ItemMap itemMap) {
+
+		// TObject をパース
+		for (int x = 0; x < layer.width; x++) {
+			for (int y = 0; y < layer.width; y++) {
+
+				// id type
+				int tileID = layer.getTileID(x, y);
+				String type = map.getTileProperty(tileID, "type", null);
+
+				// props
+				Properties props = new Properties();
+				if ( tileID != 0 ) {
+					TileSet set = map.findTileSet(tileID);
+					Properties t = set.getProperties(tileID);
+					if (t != null) props.putAll(t);
+				}
+				props.setProperty("tileID", "" + tileID);
+
+				// インスタンス
+				if ( type != null ) {
+					TObject object = objectMap.newInstance(type, map, props);
+					object.setLocation(x * map.getTileWidth(), y * map.getTileHeight());
+
+					// TItem またはその子クラスなら、Item もインスタンス化して設定
+					if ( object instanceof TItem ) {
+						String itemType = map.getTileProperty(tileID, "item", null);
+						if ( itemType != null ) {
+							Item item = itemMap.newInstance(itemType, props);
+							((TItem) object).setItem(item);
+						}
+					}
+
+					addObject(object);
+				}
+
+			}
+		}
+
+	}
+
 	@Override
 	public void render(int x, int y, int sx, int sy, int width, int height, boolean lineByLine) {
 		for (TObject object : objectList) {
@@ -54,6 +89,10 @@ public class TLayerObject extends TLayer {
 		for (TObject object : objectList) {
 			object.update(container, game, delta);
 		}
+	}
+
+	protected boolean addObject(TObject object) {
+		return objectList.add(object);
 	}
 
 	public List<TObject> getObjects() {

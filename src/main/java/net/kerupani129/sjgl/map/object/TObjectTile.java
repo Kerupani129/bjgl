@@ -1,5 +1,7 @@
 package net.kerupani129.sjgl.map.object;
 
+import java.util.Properties;
+
 import net.kerupani129.sjgl.map.TMap;
 
 public abstract class TObjectTile extends TObject {
@@ -13,8 +15,8 @@ public abstract class TObjectTile extends TObject {
 	//
 	// コンストラクタ
 	//
-	public TObjectTile(TMap map) {
-		super(map);
+	public TObjectTile(TMap map, Properties props) {
+		super(map, props);
 		setSize(map.getTileWidth(), map.getTileHeight());
 	}
 
