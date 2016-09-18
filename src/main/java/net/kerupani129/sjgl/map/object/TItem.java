@@ -26,8 +26,12 @@ public class TItem extends TEvent {
 		// マップチップ設定
 		int tileID = getTileID();
 		TileSet set = map.findTileSet(tileID);
+		// map.getTileImage(x, y, layerIndex);
 
 		animation = new SAnimation(set.tiles);
+		// animation.addFrame(Integer.MAX_VALUE, x, y);
+
+		// TODO: 画像どうしよう
 
 		Log.debug(" TItem");
 
