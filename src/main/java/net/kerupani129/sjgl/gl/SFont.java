@@ -8,7 +8,7 @@ public class SFont extends TrueTypeFont {
 	//
 	// フィールド
 	//
-	private String text;
+	protected String text;
 
 	//
 	// コンストラクタ
