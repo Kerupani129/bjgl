@@ -242,4 +242,14 @@ public class TMap extends TiledMap {
 		return getObjects(playerClassName);
 	}
 
+	public void setViewportLocation(TObject player) {
+
+		Rectangle rect = player.map.getViewport();
+		player.map.setViewportLocation(
+				player.getX() - (rect.getWidth()  - player.getWidth() ) / 2,
+				player.getY() - (rect.getHeight() - player.getHeight()) / 2
+				);
+
+	}
+
 }

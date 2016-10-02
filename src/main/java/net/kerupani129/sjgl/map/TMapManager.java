@@ -11,6 +11,7 @@ import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
+import net.kerupani129.sjgl.map.object.TObject;
 
 public class TMapManager extends HashMap<String, TMap> {
 
@@ -65,10 +66,17 @@ public class TMapManager extends HashMap<String, TMap> {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
+
 		currentMap = nextMap;
 		nextMap = null;
+
+		TObject player = currentMap.getPlayers().get(0);
+
 		currentMap.setViewportSize(container.getWidth(), container.getHeight());
+		currentMap.setViewportLocation(player);
+
 		Log.debug(" TMapManager: enter");
+
 	}
 
 }
