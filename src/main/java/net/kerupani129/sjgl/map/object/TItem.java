@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TileSet;
-import org.newdawn.slick.util.Log;
 
 import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
@@ -27,13 +26,13 @@ public class TItem extends TEvent {
 		int tileID = getTileID();
 		TileSet set = map.findTileSet(tileID);
 		// map.getTileImage(x, y, layerIndex);
+		int localID = tileID - set.firstGID;
+
+		int sheetX = set.getTileX(localID);
+		int sheetY = set.getTileY(localID);
 
 		animation = new SAnimation(set.tiles);
-		// animation.addFrame(Integer.MAX_VALUE, x, y);
-
-		// TODO: 画像どうしよう
-
-		Log.debug(" TItem");
+		animation.addFrame(Integer.MAX_VALUE, sheetX, sheetY);
 
 	}
 

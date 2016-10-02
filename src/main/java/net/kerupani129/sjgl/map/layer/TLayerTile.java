@@ -16,6 +16,7 @@ public class TLayerTile extends TLayer {
 	//
 	// メソッド
 	//
+	@Override
 	public void render(int x, int y, int sx, int sy, int width, int height, boolean lineByLine) {
 		switch (map.getOrientation()) {
 		case 1:
