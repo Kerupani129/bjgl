@@ -11,12 +11,13 @@ import net.kerupani129.sjgl.gl.SAnimation;
 import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.item.Item;
 
+// TODO: 未実装
 public class TItem extends TEvent {
 
 	// フィールド
 	private SAnimation animation;
 
-	private Item item;
+	// private Item item;
 
 	// コンストラクタ
 	public TItem(TMap map, Properties props) {
@@ -25,7 +26,6 @@ public class TItem extends TEvent {
 		// マップチップ設定
 		int tileID = getTileID();
 		TileSet set = map.findTileSet(tileID);
-		// map.getTileImage(x, y, layerIndex);
 		int localID = tileID - set.firstGID;
 
 		int sheetX = set.getTileX(localID);
@@ -40,7 +40,7 @@ public class TItem extends TEvent {
 	public void setItem (Item item) {
 
 		// 物理的なアイテムではなく、使用時の処理などが書かれたクラスのインスタンス
-		this.item = item;
+		// this.item = item;
 
 	}
 

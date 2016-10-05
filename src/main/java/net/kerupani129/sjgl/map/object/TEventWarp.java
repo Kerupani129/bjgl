@@ -25,7 +25,7 @@ public class TEventWarp extends TEvent {
 		List<TObject> players = map.getPlayers();
 
 		for (TObject player : players) {
-			if ( player.getX() == this.getX() && player.getY() == this.getY() ) {
+			if ( overlapedWith(player) ) {
 				String path = getProperty("map", null);
 				map.manager.enterMap(path);
 				game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());

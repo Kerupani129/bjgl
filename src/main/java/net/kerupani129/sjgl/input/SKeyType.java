@@ -6,5 +6,7 @@ public enum SKeyType implements SKeyTypeI {
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
+
+	SKIP
 }

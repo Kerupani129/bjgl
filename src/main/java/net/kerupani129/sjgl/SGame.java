@@ -161,6 +161,10 @@ public class SGame extends StateBasedGame {
 			key.add(Input.KEY_RIGHT);
 		});
 
+		input.addKey(SKeyType.SKIP, (key) -> {
+			key.add(Input.KEY_Q);
+		});
+
 	}
 
 	/**
