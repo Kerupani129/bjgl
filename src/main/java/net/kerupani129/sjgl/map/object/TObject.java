@@ -152,6 +152,13 @@ public abstract class TObject {
 		return props == null ? def : props.getProperty(key, def);
 	}
 
+	/**
+	 *
+	 */
+	public Object setProperty(String key, String value) {
+		return props.setProperty(key, value);
+	}
+
 	public int getTileID() {
 		return Integer.parseInt(getProperty("tileID", "" + 0));
 	}
