@@ -61,7 +61,6 @@ public class TMapManager extends HashMap<String, TMap> {
 	}
 
 	public void enterMap(String path, String pos) throws SlickException {
-		Log.debug(" path = " + path + ", pos = " + pos);
 		nextMap = new TMap(this, new File(mapDir, path).getPath(), pos, objectMap, itemMap);
 		Log.debug(" TMapManager: enterMap(\"" + path + "\")");
 	}

@@ -17,6 +17,11 @@ public abstract class TEvent extends TObjectTile {
 		super(map, props);
 
 		addAI(0, new TAIEvent(this));
+
+		// TODO: 向きのパース
+		// setDirection();
+		// getProperty("dir", null);
+
 	}
 
 	// メソッド

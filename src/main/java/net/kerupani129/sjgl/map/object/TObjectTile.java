@@ -76,6 +76,14 @@ public abstract class TObjectTile extends TObject {
 		return getYInTiles() + getDirYInTiles();
 	}
 
+	public float getLookingX() {
+		return getX() + getDirXInTiles() * getWidth();
+	}
+
+	public float getLookingY() {
+		return getY() + getDirYInTiles() * getHeight();
+	}
+
 	//
 	// インナークラス
 	//

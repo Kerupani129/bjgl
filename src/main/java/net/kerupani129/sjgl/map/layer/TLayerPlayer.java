@@ -8,8 +8,10 @@ import org.newdawn.slick.util.Log;
 import net.kerupani129.sjgl.map.ItemMap;
 import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.TObjectMap;
+import net.kerupani129.sjgl.map.object.TEventDoor;
 import net.kerupani129.sjgl.map.object.TEventWarp;
 import net.kerupani129.sjgl.map.object.TObject;
+import net.kerupani129.sjgl.map.object.TObjectTile;
 
 public class TLayerPlayer extends TLayerObject {
 
@@ -36,15 +38,25 @@ public class TLayerPlayer extends TLayerObject {
 		// インスタンス
 		if ( type != null ) {
 
+			Log.debug(" TLayerPlayer: setLocation: " + pos);
+
 			TObject object = objectMap.newInstance(type, map, props);
 			for ( TObject obj : map.getObjects() ) {
+
 				if ( obj instanceof TEventWarp ) {
-					Log.debug(" TLayerPlayer: setLocation: " + pos);
 					String name = obj.getProperty("name", null);
 					if ( pos.equals(name) ) {
 						object.setLocation(obj.getX(), obj.getY());
 					}
+				} else if ( obj instanceof TEventDoor ) {
+					String name = obj.getProperty("name", null);
+					if ( pos.equals(name) ) {
+						object.setLocation(
+								((TObjectTile) obj).getLookingX(),
+								((TObjectTile) obj).getLookingY());
+					}
 				}
+
 			}
 			addObject(object);
 			Log.debug(" TLayerPlayer: player");

@@ -19,6 +19,7 @@ import net.kerupani129.sjgl.map.layer.TLayer;
 import net.kerupani129.sjgl.map.layer.TLayerObject;
 import net.kerupani129.sjgl.map.layer.TLayerPlayer;
 import net.kerupani129.sjgl.map.layer.TLayerTile;
+import net.kerupani129.sjgl.map.object.TEventDoor;
 import net.kerupani129.sjgl.map.object.TEventWarp;
 import net.kerupani129.sjgl.map.object.TItem;
 import net.kerupani129.sjgl.map.object.TObject;
@@ -50,6 +51,7 @@ public class TMap extends TiledMap {
 
 		// 基本的な TObject の設定
 		objectMap.add(TEventWarp.class);
+		objectMap.add(TEventDoor.class);
 		objectMap.add(TItem.class);
 
 		// レイヤーパース
@@ -72,6 +74,7 @@ public class TMap extends TiledMap {
 			case "object":
 			case "event":
 			case "item":
+			case "door":
 				layerList.add(new TLayerObject(this, layer, objectMap, itemMap));
 				break;
 			case "tile":

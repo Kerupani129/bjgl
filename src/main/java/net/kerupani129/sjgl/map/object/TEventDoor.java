@@ -30,8 +30,10 @@ public class TEventDoor extends TEvent {
 				String toMap = getProperty("map", null);
 				String toPos = getProperty("pos", null);
 
-				map.manager.enterMap(toMap, toPos);
-				game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());
+				if ( toPos != null ) {
+					map.manager.enterMap(toMap, toPos);
+					game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());
+				}
 
 			}
 		}
