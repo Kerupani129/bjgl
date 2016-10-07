@@ -40,7 +40,7 @@ public class TLayerObject extends TLayer {
 
 		// TObject をパース
 		for (int x = 0; x < layer.width; x++) {
-			for (int y = 0; y < layer.width; y++) {
+			for (int y = 0; y < layer.height; y++) {
 
 				// id type
 				int tileID = layer.getTileID(x, y);
