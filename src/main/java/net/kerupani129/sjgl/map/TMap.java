@@ -17,6 +17,7 @@ import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.map.layer.TLayer;
 import net.kerupani129.sjgl.map.layer.TLayerObject;
+import net.kerupani129.sjgl.map.layer.TLayerPlayer;
 import net.kerupani129.sjgl.map.layer.TLayerTile;
 import net.kerupani129.sjgl.map.object.TEventWarp;
 import net.kerupani129.sjgl.map.object.TItem;
@@ -42,7 +43,7 @@ public class TMap extends TiledMap {
 	/**
 	 * パス文字列から TiledMap を読み込む
 	 */
-	public TMap(TMapManager manager, String path, TObjectMap objectMap, ItemMap itemMap) throws SlickException {
+	public TMap(TMapManager manager, String path, String pos, TObjectMap objectMap, ItemMap itemMap) throws SlickException {
 		super(path, getParent(path));
 
 		this.manager = manager;
@@ -64,6 +65,9 @@ public class TMap extends TiledMap {
 			switch (isObjectLayer) {
 			case "image":
 				// TODO: 画像レイヤーに対応
+				break;
+			case "player":
+				layerList.add(new TLayerPlayer(this, layer, pos, objectMap, itemMap));
 				break;
 			case "object":
 			case "event":

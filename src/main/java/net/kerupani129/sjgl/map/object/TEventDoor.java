@@ -12,10 +12,10 @@ import net.kerupani129.sjgl.SContainer;
 import net.kerupani129.sjgl.SGame;
 import net.kerupani129.sjgl.map.TMap;
 
-public class TEventWarp extends TEvent {
+public class TEventDoor extends TEvent {
 
 	// コンストラクタ
-	public TEventWarp(TMap map, Properties props) {
+	public TEventDoor(TMap map, Properties props) {
 		super(map, props);
 	}
 
@@ -25,15 +25,13 @@ public class TEventWarp extends TEvent {
 		List<TObject> players = map.getPlayers();
 
 		for (TObject player : players) {
-			if ( overlapedWith(player) ) {
+			if ( facedWith(player) ) {
 
 				String toMap = getProperty("map", null);
 				String toPos = getProperty("pos", null);
 
-				if ( toPos != null ) {
-					map.manager.enterMap(toMap, toPos);
-					game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());
-				}
+				map.manager.enterMap(toMap, toPos);
+				game.enterState(SStateGameStage.class, new FadeOutTransition(), new FadeInTransition());
 
 			}
 		}

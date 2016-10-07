@@ -1,8 +1,5 @@
 package net.kerupani129.sjgl.map.ai;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.newdawn.slick.SlickException;
 
 import net.kerupani129.sjgl.SContainer;
@@ -17,8 +14,6 @@ public abstract class TAITranslationInTiles extends TAI {
 	//
 	private AIBackgroundTranslationInTiles aiBackground;
 
-	private Map<TDirection, PointInt> dirToPointMap = new HashMap<TDirection, PointInt>(4);
-
 	//
 	// コンストラクタ
 	//
@@ -32,11 +27,6 @@ public abstract class TAITranslationInTiles extends TAI {
 		}
 
 		setAbsoluteSpeed(128, 128);
-
-		dirToPointMap.put(TDirection.RIGHT, new PointInt( 1,  0));
-		dirToPointMap.put(TDirection.DOWN , new PointInt( 0,  1));
-		dirToPointMap.put(TDirection.LEFT , new PointInt(-1,  0));
-		dirToPointMap.put(TDirection.UP   , new PointInt( 0, -1));
 
 	}
 
@@ -62,13 +52,14 @@ public abstract class TAITranslationInTiles extends TAI {
 
 		((TObjectTile) obj).setDirection(dir);
 
-		PointInt point = dirToPointMap.get(dir);
+		int x = ((TObjectTile) obj).getLookingXInTiles();
+		int y = ((TObjectTile) obj).getLookingYInTiles();
 
-		int x = point.getX();
-		int y = point.getY();
-
-		if ( "false".equals(obj.map.getTilePropertyInTiles(((TObjectTile) obj).getXInTiles() + x, ((TObjectTile) obj).getYInTiles() + y, "blocked", "false")) )
-			startTranslationInTiles(x, y);
+		if ( "false".equals(obj.map.getTilePropertyInTiles(x, y, "blocked", "false")) ) {
+			int dirX = ((TObjectTile) obj).getDirXInTiles();
+			int dirY = ((TObjectTile) obj).getDirYInTiles();
+			startTranslationInTiles(dirX, dirY);
+		}
 
 	}
 
@@ -77,19 +68,6 @@ public abstract class TAITranslationInTiles extends TAI {
 	 */
 	protected boolean isTranslating() {
 		return aiBackground.isTranslating();
-	}
-
-	//
-	// インナークラス
-	//
-	class PointInt {
-		private int x = 0, y = 0;
-		public PointInt(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-		public int getX() { return x; }
-		public int getY() { return y; }
 	}
 
 }

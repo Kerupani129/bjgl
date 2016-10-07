@@ -24,7 +24,7 @@ public class TObjectCharactor extends TObjectTile {
 		int tileID = getTileID();
 		TileSet set = map.findTileSet(tileID);
 
-		setCharactorAnimation(set.tiles);
+		if ( set != null ) setCharactorAnimation(set.tiles);
 
 	}
 

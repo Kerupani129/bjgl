@@ -27,7 +27,7 @@ public class TObjectMap extends HashMap<String, Class<? extends TObject>> {
 			return obj;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException | NullPointerException e) {
-			throw new IllegalStateException("TObject の インスタンス化に失敗しました");
+			throw new IllegalStateException("TObject の インスタンス化に失敗しました" + e.getCause(), e);
 		}
 	}
 

@@ -60,8 +60,9 @@ public class TMapManager extends HashMap<String, TMap> {
 		currentMap.update(container, game, delta);
 	}
 
-	public void enterMap(String path) throws SlickException {
-		nextMap = new TMap(this, new File(mapDir, path).getPath(), objectMap, itemMap);
+	public void enterMap(String path, String pos) throws SlickException {
+		Log.debug(" path = " + path + ", pos = " + pos);
+		nextMap = new TMap(this, new File(mapDir, path).getPath(), pos, objectMap, itemMap);
 		Log.debug(" TMapManager: enterMap(\"" + path + "\")");
 	}
 
