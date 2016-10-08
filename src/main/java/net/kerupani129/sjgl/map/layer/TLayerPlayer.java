@@ -44,11 +44,17 @@ public class TLayerPlayer extends TLayerObject {
 			for ( TObject obj : map.getObjects() ) {
 
 				if ( obj instanceof TEventWarp ) {
+
 					String name = obj.getProperty("name", null);
 					if ( pos.equals(name) ) {
 						player.setLocation(obj.getX(), obj.getY());
+						((TObjectTile) player).setDirection(
+								((TObjectTile) obj).getDirection()
+								);
 					}
+
 				} else if ( obj instanceof TEventDoor ) {
+
 					String name = obj.getProperty("name", null);
 					if ( pos.equals(name) ) {
 						player.setLocation(
@@ -58,6 +64,7 @@ public class TLayerPlayer extends TLayerObject {
 								((TObjectTile) obj).getDirection()
 								);
 					}
+
 				}
 
 			}
