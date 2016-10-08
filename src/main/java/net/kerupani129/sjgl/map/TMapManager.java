@@ -21,7 +21,6 @@ public class TMapManager extends HashMap<String, TMap> {
 	//
 	private String mapDir;
 	private TObjectMap objectMap;
-	private ItemMap itemMap;
 
     private final Properties props = new Properties();
 
@@ -30,10 +29,9 @@ public class TMapManager extends HashMap<String, TMap> {
 	//
 	// コンストラクタ
 	//
-	public TMapManager(String mapDir, TObjectMap objectMap, ItemMap itemMap) {
+	public TMapManager(String mapDir, TObjectMap objectMap) {
 		this.mapDir = mapDir;
 		this.objectMap = objectMap;
-		this.itemMap = itemMap;
 	}
 
 	//
@@ -64,7 +62,7 @@ public class TMapManager extends HashMap<String, TMap> {
 	}
 
 	public void enterMap(String path, String pos) throws SlickException {
-		nextMap = new TMap(this, new File(mapDir, path).getPath(), pos, objectMap, itemMap);
+		nextMap = new TMap(this, new File(mapDir, path).getPath(), pos, objectMap);
 		Log.debug(" TMapManager: enterMap(\"" + path + "\")");
 	}
 

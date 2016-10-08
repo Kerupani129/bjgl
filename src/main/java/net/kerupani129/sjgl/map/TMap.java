@@ -44,7 +44,7 @@ public class TMap extends TiledMap {
 	/**
 	 * パス文字列から TiledMap を読み込む
 	 */
-	public TMap(TMapManager manager, String path, String pos, TObjectMap objectMap, ItemMap itemMap) throws SlickException {
+	public TMap(TMapManager manager, String path, String pos, TObjectMap objectMap) throws SlickException {
 		super(path, getParent(path));
 
 		this.manager = manager;
@@ -69,13 +69,13 @@ public class TMap extends TiledMap {
 				// TODO: 画像レイヤーに対応
 				break;
 			case "player":
-				layerList.add(new TLayerPlayer(this, layer, pos, objectMap, itemMap));
+				layerList.add(new TLayerPlayer(this, layer, pos, objectMap));
 				break;
 			case "object":
 			case "event":
 			case "item":
 			case "door":
-				layerList.add(new TLayerObject(this, layer, objectMap, itemMap));
+				layerList.add(new TLayerObject(this, layer, objectMap));
 				break;
 			case "tile":
 			default:

@@ -5,7 +5,6 @@ import java.util.Properties;
 import org.newdawn.slick.tiled.Layer;
 import org.newdawn.slick.util.Log;
 
-import net.kerupani129.sjgl.map.ItemMap;
 import net.kerupani129.sjgl.map.TMap;
 import net.kerupani129.sjgl.map.TObjectMap;
 import net.kerupani129.sjgl.map.object.TEventDoor;
@@ -18,8 +17,8 @@ public class TLayerPlayer extends TLayerObject {
 	//
 	// コンストラクタ
 	//
-	public TLayerPlayer(TMap map, Layer layer, String pos, TObjectMap objectMap, ItemMap itemMap) {
-		super(map, layer, objectMap, itemMap);
+	public TLayerPlayer(TMap map, Layer layer, String pos, TObjectMap objectMap) {
+		super(map, layer, objectMap);
 
 		parsePlayers(pos, objectMap);
 	}
