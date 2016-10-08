@@ -171,6 +171,7 @@ public class TMap extends TiledMap {
 		int id = getTileId(x, y, layerIndex);
 
 		if ( id != 0 ) {
+			prop = getLayerProperty(layerIndex, propertyName, prop); // TODO: これでいいのか？
 			prop = getTileProperty(id, propertyName, prop);
 		}
 

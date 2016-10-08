@@ -43,11 +43,14 @@ public class TLayerPlayer extends TLayerObject {
 			TObject player = objectMap.newInstance(type, map, props);
 			for ( TObject obj : map.getObjects() ) {
 
+				Log.debug(" TLayerPlayer: object");
+
 				if ( obj instanceof TEventWarp ) {
 
 					String name = obj.getProperty("name", null);
 					if ( pos.equals(name) ) {
 						player.setLocation(obj.getX(), obj.getY());
+						Log.debug(" TLayerPlayer: setLocation: (" + obj.getX() + ", " + obj.getY() + ")");
 						((TObjectTile) player).setDirection(
 								((TObjectTile) obj).getDirection()
 								);
@@ -69,7 +72,7 @@ public class TLayerPlayer extends TLayerObject {
 
 			}
 			addObject(player);
-			Log.debug(" TLayerPlayer: player");
+
 		}
 
 	}
