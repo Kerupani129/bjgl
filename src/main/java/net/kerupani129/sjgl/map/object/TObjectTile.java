@@ -14,20 +14,29 @@ public abstract class TObjectTile extends TObject {
 	private TDirection direction = TDirection.DOWN;
 	private boolean isTranslating = false;
 
-	private Map<TDirection, PointInt> dirToPointMap = new HashMap<TDirection, PointInt>(4);
+	private static Map<TDirection, PointInt> dirToPointMap = new HashMap<TDirection, PointInt>(4);
 
 	//
 	// コンストラクタ
 	//
-	public TObjectTile(TMap map, Properties props) {
-		super(map, props);
-
-		setSize(map.getTileWidth(), map.getTileHeight());
+	{
 
 		dirToPointMap.put(TDirection.RIGHT, new PointInt( 1,  0));
 		dirToPointMap.put(TDirection.DOWN , new PointInt( 0,  1));
 		dirToPointMap.put(TDirection.LEFT , new PointInt(-1,  0));
 		dirToPointMap.put(TDirection.UP   , new PointInt( 0, -1));
+
+	}
+
+	public TObjectTile(TMap map, Properties props) {
+		super(map, props);
+
+		setSize(map.getTileWidth(), map.getTileHeight());
+
+		String dir = getProperty("dir", null);
+		if ( dir != null ) {
+			direction = TDirection.parseDirection(dir);
+		}
 
 	}
 

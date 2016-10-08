@@ -2,6 +2,7 @@ package net.kerupani129.sjgl.map;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Properties;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,6 +22,8 @@ public class TMapManager extends HashMap<String, TMap> {
 	private String mapDir;
 	private TObjectMap objectMap;
 	private ItemMap itemMap;
+
+    private final Properties props = new Properties();
 
 	private TMap currentMap, nextMap;
 
@@ -77,6 +80,14 @@ public class TMapManager extends HashMap<String, TMap> {
 
 		Log.debug(" TMapManager: enter");
 
+	}
+
+	public String getGlobalProperty(String key, String def) {
+		return props.getProperty(key, def);
+	}
+
+	public Object setGlobalProperty(String key, String value) {
+		return props.setProperty(key, value);
 	}
 
 }
